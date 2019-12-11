@@ -7,6 +7,7 @@ const entityList = {
     { name: "_id", type: "VARCHAR" },
     { name: "email", type: "VARCHAR" },
     { name: "phone", type: "VARCHAR" },
+    { name: "password", type: "VARCHAR" },
     { name: "address", type: "VARCHAR" },
     { name: "name", type: "VARCHAR" },
     { name: "avatar", type: "VARCHAR" }

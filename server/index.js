@@ -2,13 +2,15 @@ const Koa = require("koa");
 const path = require("path");
 const uuid = require("uuid");
 const koaBody = require("koa-body");
+const cache = require("./service/CacheMemoryService");
+const authService = require("./service/AuthService");
 
 let fs = require("fs");
 const restc = require("restc");
 
 //start Koa
 const app = new Koa();
-
+const FILE_PATH = path.join(process.cwd(), ".upload");
 //最初的错误截获
 app.use(async (ctx, next) => {
   try {
@@ -80,23 +82,50 @@ app.use(async (ctx, next) => {
   const ms = Date.now() - start;
   ctx.set("X-Response-Time", `${ms}ms`);
 });
+// token
+app.use(async (ctx, next) => {
+  let token;
+  //检查是否登录
+  token = ctx.request.header.token;
+  if (!token) {
+    token = ctx.cookies.get("___user_token");
+  }
+  if (!token) {
+    token = ctx.request.body.___user_token;
+    delete ctx.request.body.___user_token;
+  }
+  console.log("-- token:", token);
+  if (token && token.length) {
+    let obj = cache.get(token);
+    if (obj) {
+      ctx.tokenObj = typeof obj === "string" ? JSON.parse(obj) : obj;
+    } else {
+      obj = JSON.parse(authService.decrypt(token));
+      cache.set(token, obj, 1000 * 60 * 60); // 缓存1个小时
+      ctx.tokenObj = obj;
+    }
+    if (ctx.tokenObj && ctx.tokenObj.creator) {
+      ctx.currentUserId = ctx.tokenObj.creator;
+    }
+  }
+  await next();
+});
 //真正的逻辑执行
 app.use(async ctx => {
   let key = `/${ctx.entity}/${ctx.apiName}@${ctx.method.toLowerCase()}`;
-  if (key === "/FileItem/uploadFiles@post") {
+  if (key === "/File/uploadFiles@post") {
     //保存文件
     let fileId = uuid.v1();
     // 创建可读流
-    const reader = fs.createReadStream(ctx.request.files.fileObj.path);
-    let filePath = path.join(__dirname, ".upload/") + `${fileId}`;
-    // 创建可写流
-    const upStream = fs.createWriteStream(filePath);
+    const data = fs.readFileSync(ctx.request.files.file.path);
+    if (!fs.existsSync(FILE_PATH)) {
+      fs.mkdirSync(FILE_PATH);
+    }
+    fs.writeFileSync(`${FILE_PATH}/${fileId}`, data);
     // 可读流通过管道写入可写流
-    reader.pipe(upStream);
     ctx.body = { fileId };
-  } else if (key === "/FileItem/getFile@get") {
-    let filePath =
-      path.join(__dirname, ".upload/") + `${ctx.request.body.fileId}`;
+  } else if (key === "/File/getFile@get") {
+    let filePath = `${FILE_PATH}/${ctx.request.body._id}`;
     const reader = fs.createReadStream(filePath);
     ctx.body = reader;
     ctx.status = 200;

@@ -21,12 +21,14 @@ const Routes = () => {
       <RouteWithLayout
         component={DashboardView}
         exact
+        isAuth={true}
         layout={MainLayout}
         path="/dashboard"
       />
       <RouteWithLayout
         component={UserListView}
         exact
+        isAuth={true}
         layout={MainLayout}
         path="/users"
       />
@@ -52,6 +54,7 @@ const Routes = () => {
       <RouteWithLayout
         component={SettingsView}
         exact
+        isAuth={true}
         layout={MainLayout}
         path="/settings"
       />

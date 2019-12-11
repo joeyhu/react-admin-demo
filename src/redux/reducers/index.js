@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
-import sign from "./sign.js";
+import sign from "./sign";
+import profile from "./profile";
 
-export default combineReducers({ sign });
+export default combineReducers({ sign, profile });

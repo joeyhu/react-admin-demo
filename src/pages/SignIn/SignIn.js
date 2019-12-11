@@ -5,8 +5,8 @@ import validate from "validate.js";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, TextField, Link, Typography, Fade } from "@material-ui/core";
 
-import { connect } from "react-redux";
-import { signIn } from "../../redux/actions";
+// import { connect } from "react-redux";
+// import { signIn } from "../../redux/actions";
 
 // import { Facebook as FacebookIcon, Google as GoogleIcon } from 'icons';
 
@@ -105,16 +105,9 @@ const SignIn = props => {
 
   const handleSignIn = event => {
     event.preventDefault();
-    //TODO Just for test
-    if (
-      formState.values.email === "joey@gmail.com" &&
-      formState.values.password === "joey"
-    ) {
-      history.push("/");
-    } else {
-      sessionStorage.setItem("isLogin", "1");
-      setError(true);
-    }
+    // const { email, password } = formState.values;
+    // signIn({ email, password });
+    //setError(true);
   };
 
   const hasError = field =>
@@ -184,4 +177,5 @@ SignIn.propTypes = {
   history: PropTypes.object
 };
 
-export default withRouter(connect(null, { signIn })(SignIn));
+// export default withRouter(connect(null, { signIn })(SignIn));
+export default withRouter(SignIn);
