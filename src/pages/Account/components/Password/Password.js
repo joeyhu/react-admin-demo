@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/styles';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/styles";
 import {
   Card,
   CardHeader,
@@ -10,7 +10,7 @@ import {
   Divider,
   Button,
   TextField
-} from '@material-ui/core';
+} from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -22,8 +22,8 @@ const Password = props => {
   const classes = useStyles();
 
   const [values, setValues] = useState({
-    password: '',
-    confirm: ''
+    password: "",
+    confirm: ""
   });
 
   const handleChange = event => {
@@ -34,15 +34,9 @@ const Password = props => {
   };
 
   return (
-    <Card
-      {...rest}
-      className={clsx(classes.root, className)}
-    >
+    <Card {...rest} className={clsx(classes.root, className)}>
       <form>
-        <CardHeader
-          subheader="Update password"
-          title="Password"
-        />
+        <CardHeader subheader="Update password" title="Password" />
         <Divider />
         <CardContent>
           <TextField
@@ -59,7 +53,7 @@ const Password = props => {
             label="Confirm password"
             name="confirm"
             onChange={handleChange}
-            style={{ marginTop: '1rem' }}
+            style={{ marginTop: "1rem" }}
             type="password"
             value={values.confirm}
             variant="outlined"
@@ -67,10 +61,7 @@ const Password = props => {
         </CardContent>
         <Divider />
         <CardActions>
-          <Button
-            color="primary"
-            variant="outlined"
-          >
+          <Button color="primary" variant="contained">
             Update
           </Button>
         </CardActions>

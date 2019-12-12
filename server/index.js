@@ -19,7 +19,7 @@ app.use(async (ctx, next) => {
     await next();
   } catch (e) {
     console.error(e);
-    ctx.status = e.code && typeof e.code === "number" ? e.code : 500;
+    ctx.status = ctx.status >= 400 ? ctx.status : 500;
     ctx.body = {
       code: ctx.status,
       errMsg: e && e.message ? e.message : "服务器异常"

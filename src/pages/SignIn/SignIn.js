@@ -6,8 +6,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Button, TextField, Link, Typography, Fade } from "@material-ui/core";
 
 // import { bindActionCreators } from "redux";
-// import { connect } from "react-redux";
+import { connect } from "react-redux";
 import { reqApi } from "../../api";
+import { updateProfile } from "../../redux/actions";
 
 // import { Facebook as FacebookIcon, Google as GoogleIcon } from 'icons';
 
@@ -156,7 +157,7 @@ const SignIn = props => {
           value={formState.values.password || ""}
           variant="outlined"
         />
-        <Fade in={errMsg.length}>
+        <Fade in={errMsg.length > 0}>
           <Typography className={classes.errCon} color="error">
             {errMsg}
           </Typography>
@@ -192,5 +193,4 @@ SignIn.propTypes = {
 // };
 // const mapDispatchToProps = dispatch => bindActionCreators({ signIn }, dispatch);
 
-// export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignIn));
-export default withRouter(SignIn);
+export default withRouter(connect(null, { updateProfile })(SignIn));

@@ -21,6 +21,7 @@ const Footer = props => {
         className={classes.name}
         variant="body1"
         color="textSecondary"
+        style={{ textAlign: "center" }}
       >
         &copy; 2019 成都志前科技有限公司
       </Typography>

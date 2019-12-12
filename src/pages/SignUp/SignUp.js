@@ -187,7 +187,7 @@ const SignUp = props => {
           value={formState.values.password || ""}
           variant="outlined"
         />
-        <Fade in={errMsg.length}>
+        <Fade in={errMsg.length > 0}>
           <Typography className={classes.errCon} color="error">
             {errMsg}
           </Typography>

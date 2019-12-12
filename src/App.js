@@ -25,6 +25,7 @@ const locales = {
 export const history = createBrowserHistory();
 
 function App(props) {
+  const { updateProfile } = props;
   let [initDone, setInitDone] = useState(false);
   intl
     .init({
@@ -36,11 +37,16 @@ function App(props) {
     });
 
   useEffect(() => {
-    reqApi.get("/User/profile").then(function(response) {
-      props.updateProfile(response.data);
+    const token = sessionStorage.getItem("token");
+    if (token && token.length) {
+      reqApi.get("/User/profile").then(function(response) {
+        updateProfile(response.data);
+        setInitDone(true);
+      });
+    } else {
       setInitDone(true);
-    });
-  }, [props]);
+    }
+  }, [props, updateProfile]);
 
   return (
     initDone && (

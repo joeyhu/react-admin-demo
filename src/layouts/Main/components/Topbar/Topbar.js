@@ -1,5 +1,5 @@
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, withRouter } from "react-router-dom";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import { makeStyles, withStyles } from "@material-ui/styles";
@@ -19,6 +19,9 @@ import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import { Menu, MenuItem, ListItemIcon, ListItemText } from "@material-ui/core";
 // import NotificationsIcon from "@material-ui/icons/NotificationsOutlined";
 // import InputIcon from "@material-ui/icons/Input";
+
+import { connect } from "react-redux";
+import { updateProfile } from "../../../../redux/actions";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -40,7 +43,7 @@ const SignOutMenuItem = withStyles(theme => ({
 }))(MenuItem);
 
 const Topbar = props => {
-  const { className, onSidebarOpen, ...rest } = props;
+  const { className, history, updateProfile, onSidebarOpen, ...rest } = props;
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -51,6 +54,11 @@ const Topbar = props => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const signOut = () => {
+    handleClose();
+    sessionStorage.removeItem("token");
+    updateProfile({});
   };
 
   return (
@@ -75,23 +83,27 @@ const Topbar = props => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem onClick={handleClose}>
+          <MenuItem component={RouterLink} to="/account" onClick={handleClose}>
             <ListItemIcon>
               <AccountBoxIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText primary="Profile" />
           </MenuItem>
-          <MenuItem onClick={handleClose}>
+          <MenuItem component={RouterLink} to="/settings" onClick={handleClose}>
             <ListItemIcon>
               <SettingsIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText primary="Settings" />
           </MenuItem>
-          <SignOutMenuItem onClick={handleClose}>
+          <SignOutMenuItem
+            component={RouterLink}
+            to="/sign-in"
+            onClick={signOut}
+          >
             <ListItemIcon>
               <ExitToAppIcon fontSize="small" />
             </ListItemIcon>
-            <ListItemText primary="Logout" />
+            <ListItemText primary="SignOut" />
           </SignOutMenuItem>
         </Menu>
       </Toolbar>
@@ -104,4 +116,4 @@ Topbar.propTypes = {
   onSidebarOpen: PropTypes.func
 };
 
-export default Topbar;
+export default connect(null, { updateProfile })(Topbar);
