@@ -4,12 +4,14 @@ const uuid = require("uuid");
 const koaBody = require("koa-body");
 const cache = require("./service/CacheMemoryService");
 const authService = require("./service/AuthService");
+const sqliteService = require("./service/SqliteService");
 
 let fs = require("fs");
 const restc = require("restc");
 
 //start Koa
 const app = new Koa();
+sqliteService.init();
 const FILE_PATH = path.join(process.cwd(), ".upload");
 //最初的错误截获
 app.use(async (ctx, next) => {
@@ -65,6 +67,9 @@ app.use(async (ctx, next) => {
     //console.log('3:', ctx.request.body);
 
     ctx.request.body || (ctx.request.body = {});
+    if (typeof ctx.request.body === "string") {
+      ctx.request.body = JSON.parse(ctx.request.body);
+    }
     ctx.request.query || (ctx.request.query = {});
     for (let k in ctx.request.query) {
       ctx.request.body[k] = decodeURIComponent(ctx.request.query[k]);

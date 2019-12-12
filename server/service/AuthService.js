@@ -1,6 +1,7 @@
 const cache = require("./CacheMemoryService");
 const crypto = require("crypto");
 const fs = require("fs");
+const uuid = require("uuid");
 const iv = "2624750004598718";
 
 //执行RSA加密会得到一个类似这样的错误：data too large for key size，
@@ -46,7 +47,7 @@ let decryptByAes = function(key, iv, crypted) {
 let encrypt = str => {
   let key = "751f621ea5c8f930";
   let publicKey = fs
-    .readFileSync("./session_keys/rsa_public_key.pem")
+    .readFileSync("./server/session_keys/rsa_public_key.pem")
     .toString("ascii");
   // 公钥加密key
   let encodeDataKey = crypto
@@ -75,7 +76,7 @@ const decrypt = str => {
   let encodeDataKey = str.substring(0, sIndex);
   let encodeData = str.substring(sIndex + 1);
   let privateKey = fs
-    .readFileSync("./session_keys/rsa_private_key.pem")
+    .readFileSync("./server/session_keys/rsa_private_key.pem")
     .toString("ascii");
   let buffer2 = new Buffer(encodeDataKey, "base64");
   let decrypted = crypto.privateDecrypt(
@@ -104,7 +105,7 @@ const delToken = token => {
 };
 const startSession = (deviceId, userId) => {
   let d = {
-    _id: "".genUUID(),
+    _id: uuid.v1(),
     creator: userId,
     createTime: new Date().getTime(),
     deviceId

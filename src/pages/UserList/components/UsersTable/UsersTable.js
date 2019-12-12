@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
-import moment from "moment";
+// import moment from "moment";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { makeStyles } from "@material-ui/styles";
 import {
@@ -113,9 +113,7 @@ const UsersTable = props => {
                   </TableCell>
                   <TableCell>Name</TableCell>
                   <TableCell>Email</TableCell>
-                  <TableCell>Location</TableCell>
                   <TableCell>Phone</TableCell>
-                  <TableCell>Registration date</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -136,21 +134,14 @@ const UsersTable = props => {
                     </TableCell>
                     <TableCell>
                       <div className={classes.nameContainer}>
-                        <Avatar className={classes.avatar} src={user.avatarUrl}>
+                        <Avatar className={classes.avatar} src={user.avatar}>
                           {getInitials(user.name)}
                         </Avatar>
                         <Typography variant="body1">{user.name}</Typography>
                       </div>
                     </TableCell>
                     <TableCell>{user.email}</TableCell>
-                    <TableCell>
-                      {user.address.city}, {user.address.state},{" "}
-                      {user.address.country}
-                    </TableCell>
                     <TableCell>{user.phone}</TableCell>
-                    <TableCell>
-                      {moment(user.createdAt).format("DD/MM/YYYY")}
-                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>

@@ -5,8 +5,9 @@ import validate from "validate.js";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, TextField, Link, Typography, Fade } from "@material-ui/core";
 
+// import { bindActionCreators } from "redux";
 // import { connect } from "react-redux";
-// import { signIn } from "../../redux/actions";
+import { reqApi } from "../../api";
 
 // import { Facebook as FacebookIcon, Google as GoogleIcon } from 'icons';
 
@@ -69,6 +70,7 @@ const SignIn = props => {
     touched: {},
     errors: {}
   });
+  const [errMsg, setErrMsg] = useState("");
 
   useEffect(() => {
     const errors = validate(formState.values, schema);
@@ -86,7 +88,7 @@ const SignIn = props => {
 
   const handleChange = event => {
     event.persist();
-    setError(false);
+    setErrMsg("");
     setFormState(formState => ({
       ...formState,
       values: {
@@ -105,14 +107,22 @@ const SignIn = props => {
 
   const handleSignIn = event => {
     event.preventDefault();
-    // const { email, password } = formState.values;
-    // signIn({ email, password });
-    //setError(true);
+    const { email, password } = formState.values;
+    reqApi
+      .post("/User/signIn", { email, password })
+      .then(function(response) {
+        props.updateProfile(response.data);
+        sessionStorage.setItem("token", response.data.sessionFullStr);
+        history.push("/");
+      })
+      .catch(e => {
+        console.log(e.response.data.errMsg);
+        setErrMsg(e.response.data.errMsg);
+      });
   };
 
   const hasError = field =>
     formState.touched[field] && formState.errors[field] ? true : false;
-  const [error, setError] = React.useState(false);
 
   return (
     <div className={classes.root}>
@@ -146,9 +156,9 @@ const SignIn = props => {
           value={formState.values.password || ""}
           variant="outlined"
         />
-        <Fade in={error}>
+        <Fade in={errMsg.length}>
           <Typography className={classes.errCon} color="error">
-            用户名或密码错误！
+            {errMsg}
           </Typography>
         </Fade>
         <Button
@@ -176,6 +186,11 @@ const SignIn = props => {
 SignIn.propTypes = {
   history: PropTypes.object
 };
+// const mapStateToProps = state => {
+//   console.log(state);
+//   return state;
+// };
+// const mapDispatchToProps = dispatch => bindActionCreators({ signIn }, dispatch);
 
-// export default withRouter(connect(null, { signIn })(SignIn));
+// export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignIn));
 export default withRouter(SignIn);

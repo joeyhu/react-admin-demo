@@ -6,14 +6,25 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Button, TextField, Link, Typography, Fade } from "@material-ui/core";
 
 import { connect } from "react-redux";
-import { signIn } from "../../redux/actions";
-
-// import { Facebook as FacebookIcon, Google as GoogleIcon } from 'icons';
+import { updateProfile } from "../../redux/actions";
+import { reqApi } from "../../api";
 
 const schema = {
+  name: {
+    presence: { allowEmpty: false, message: "is required" },
+    length: {
+      maximum: 64
+    }
+  },
   email: {
     presence: { allowEmpty: false, message: "is required" },
     email: true,
+    length: {
+      maximum: 64
+    }
+  },
+  phone: {
+    presence: { allowEmpty: true },
     length: {
       maximum: 64
     }
@@ -58,21 +69,21 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SignIn = props => {
+const SignUp = props => {
   const { history } = props;
 
   const classes = useStyles();
 
   const [formState, setFormState] = useState({
     isValid: false,
-    values: { email: "joey@gmail.com", password: "joey" },
+    values: { email: "", password: "" },
     touched: {},
     errors: {}
   });
+  const [errMsg, setErrMsg] = useState("");
 
   useEffect(() => {
     const errors = validate(formState.values, schema);
-
     setFormState(formState => ({
       ...formState,
       isValid: errors ? false : true,
@@ -86,7 +97,7 @@ const SignIn = props => {
 
   const handleChange = event => {
     event.persist();
-    setError(false);
+    setErrMsg(false);
     setFormState(formState => ({
       ...formState,
       values: {
@@ -103,30 +114,41 @@ const SignIn = props => {
     }));
   };
 
-  const handleSignIn = event => {
+  const handleSignUp = event => {
     event.preventDefault();
-    //TODO Just for test
-    if (
-      formState.values.email === "joey@gmail.com" &&
-      formState.values.password === "joey"
-    ) {
-      history.push("/");
-    } else {
-      sessionStorage.setItem("isLogin", "1");
-      setError(true);
-    }
+    reqApi
+      .post("/User/signUp", formState.values)
+      .then(function(response) {
+        props.updateProfile(response.data);
+        sessionStorage.setItem("token", response.data.sessionFullStr);
+        history.push("/");
+      })
+      .catch(e => {
+        setErrMsg(e.response.data.errMsg);
+      });
   };
 
   const hasError = field =>
     formState.touched[field] && formState.errors[field] ? true : false;
-  const [error, setError] = React.useState(false);
 
   return (
     <div className={classes.root}>
-      <form className={classes.form} onSubmit={handleSignIn}>
+      <form className={classes.form} onSubmit={handleSignUp}>
         <Typography className={classes.title} variant="h2">
           Sign Up
         </Typography>
+        <TextField
+          className={classes.textField}
+          error={hasError("name")}
+          fullWidth
+          helperText={hasError("name") ? formState.errors.name[0] : null}
+          label="Name"
+          name="name"
+          onChange={handleChange}
+          type="text"
+          value={formState.values.name || ""}
+          variant="outlined"
+        />
         <TextField
           className={classes.textField}
           error={hasError("email")}
@@ -137,6 +159,18 @@ const SignIn = props => {
           onChange={handleChange}
           type="text"
           value={formState.values.email || ""}
+          variant="outlined"
+        />
+        <TextField
+          className={classes.textField}
+          error={hasError("phone")}
+          fullWidth
+          helperText={hasError("phone") ? formState.errors.phone[0] : null}
+          label="Phone Number"
+          name="phone"
+          onChange={handleChange}
+          type="text"
+          value={formState.values.phone || ""}
           variant="outlined"
         />
         <TextField
@@ -153,9 +187,9 @@ const SignIn = props => {
           value={formState.values.password || ""}
           variant="outlined"
         />
-        <Fade in={error}>
+        <Fade in={errMsg.length}>
           <Typography className={classes.errCon} color="error">
-            用户名或密码错误！
+            {errMsg}
           </Typography>
         </Fade>
         <Button
@@ -180,8 +214,8 @@ const SignIn = props => {
   );
 };
 
-SignIn.propTypes = {
+SignUp.propTypes = {
   history: PropTypes.object
 };
-
-export default withRouter(connect(null, { signIn })(SignIn));
+export default withRouter(connect(null, { updateProfile })(SignUp));
+// export default withRouter(SignUp);

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/styles';
+import React, { useState, useEffect } from "react";
+import { makeStyles } from "@material-ui/styles";
 
-import { UsersToolbar, UsersTable } from './components';
-import mockData from './data';
+import { UsersToolbar, UsersTable } from "./components";
+// import mockData from "./data";
+import { reqApi } from "../../api";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -15,8 +16,13 @@ const useStyles = makeStyles(theme => ({
 
 const UserList = () => {
   const classes = useStyles();
+  const [users, setUsers] = useState([]);
 
-  const [users] = useState(mockData);
+  useEffect(() => {
+    reqApi.get("/User/query").then(function(response) {
+      setUsers(response.data);
+    });
+  }, []);
 
   return (
     <div className={classes.root}>

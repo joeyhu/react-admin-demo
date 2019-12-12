@@ -4,12 +4,12 @@ import PropTypes from "prop-types";
 
 const RouteWithLayout = props => {
   const { layout: Layout, component: Component, isAuth, ...rest } = props;
-  const notLogin = sessionStorage.getItem("isLogin") !== "1";
+  const token = sessionStorage.getItem("token");
   return (
     <Route
       {...rest}
       render={matchProps =>
-        isAuth && notLogin ? (
+        isAuth && (!token || !token.length) ? (
           <Redirect
             to={{
               pathname: "/sign-in",

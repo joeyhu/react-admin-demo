@@ -5,6 +5,7 @@ import clsx from "clsx";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/styles";
 import { Avatar, Typography } from "@material-ui/core";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,27 +23,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 const Profile = props => {
-  const { className, sideBarClose, ...rest } = props;
+  const { className, sideBarClose, profile, ...rest } = props;
   const history = useHistory();
   const classes = useStyles();
-  const [user, setUser] = useState({
-    name: "Joey Hu",
-    avatar: "/images/avatars/avatar_11.png",
-    desc: "Developer"
-  });
   // const controller = new AbortController();
   // const signal = controller.signal;
 
-  useEffect(() => {
-    // axios
-    //   .get("/api/account/User/profile")
-    //   .then(({ data }) => {
-    //     setUser(data);
-    //   })
-    //   .catch(err => {
-    //     console.error(err);
-    //   });
-  }, []);
+  useEffect(() => {}, []);
   const goSettings = () => {
     sideBarClose();
     history.push("/settings");
@@ -52,13 +39,14 @@ const Profile = props => {
       <Avatar
         alt="Person"
         className={classes.avatar}
-        src={user.avatar}
+        src={profile.avatar}
         onClick={goSettings}
       />
       <Typography className={classes.name} variant="h4">
-        {user.name}
+        {profile.name}
       </Typography>
-      <Typography variant="body2">{user.desc}</Typography>
+      <Typography variant="body2">{profile.email}</Typography>
+      <Typography variant="body2">{profile.phone}</Typography>
     </div>
   );
 };
@@ -66,5 +54,8 @@ const Profile = props => {
 Profile.propTypes = {
   className: PropTypes.string
 };
-
-export default Profile;
+const mapStateToProps = state => {
+  console.log(state);
+  return state;
+};
+export default connect(mapStateToProps)(Profile);

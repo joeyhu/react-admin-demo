@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import { UploadFile } from "../../../../components";
 import { updateProfile } from "../../../../redux/actions";
+import { reqApi } from "../../../../api";
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -47,21 +48,15 @@ const mapStateToProps = state => {
 };
 const AccountProfile = props => {
   const { className, profile, updateProfile, ...rest } = props;
-  // const [icon, setIcon] = useState("/images/avatars/avatar_11.png");
-  // const user = {
-  //   name: "Joey",
-  //   city: "Hu",
-  //   country: "CN",
-  //   timezone: "GTM-7",
-  //   avatar: "/images/avatars/avatar_11.png"
-  // };
 
   const classes = useStyles();
 
   const uploadSuccess = fileId => {
-    console.log("......", fileId);
-    // setIcon(`/api/File/getFile?_id=${fileId}`);
-    updateProfile({ icon: `/api/File/getFile?_id=${fileId}` });
+    reqApi
+      .post("/User/setProfile", { avatar: `/api/File/getFile?_id=${fileId}` })
+      .then(function(response) {
+        updateProfile(response.data);
+      });
   };
 
   return (
@@ -77,17 +72,27 @@ const AccountProfile = props => {
               color="textSecondary"
               variant="body1"
             >
+              {profile.email}
+            </Typography>
+            <Typography
+              className={classes.locationText}
+              color="textSecondary"
+              variant="body1"
+            >
+              {profile.phone}
+            </Typography>
+            <Typography
+              className={classes.locationText}
+              color="textSecondary"
+              variant="body1"
+            >
               {profile.address}
             </Typography>
           </div>
           <div className={classes.avatarCon}>
-            <Avatar className={classes.avatar} src={profile.icon} />
+            <Avatar className={classes.avatar} src={profile.avatar} />
             <UploadFile onSuccess={uploadSuccess} />
           </div>
-        </div>
-        <div className={classes.progress}>
-          <Typography variant="body1">Profile Completeness: 70%</Typography>
-          <LinearProgress value={70} variant="determinate" />
         </div>
       </CardContent>
     </Card>

@@ -36,40 +36,54 @@ const init = () => {
     stmt.run();
   });
 };
-const getById = (table, id) => {
-  const stmt = db.prepare(`SELECT * FROM ${table} WHERE _id = ?`);
-  return stmt.get(id);
+const getById = (table, _id) => {
+  return getOne(table, { _id });
 };
 const all = table => {
   const stmt = db.prepare(`SELECT * FROM ${table}`);
   return stmt.all();
 };
 const query = (table, params) => {
-  let paramValues = [];
   let keys = Object.keys(params).map(key => {
-    paramValues.push(params[key]);
     return `${key}=@${key}`;
   });
-  const stmt = db.prepare(
-    `SELECT * FROM ${table} ${keys.length > 0 ? "WHERE" : ""} ${keys.join(
-      " and "
-    )}`
-  );
-  return stmt.all(paramValues);
+  let sql = `SELECT * FROM ${table} ${
+    keys.length > 0 ? "WHERE" : ""
+  } ${keys.join(" and ")}`;
+  const stmt = db.prepare(sql);
+  return stmt.all(params);
+};
+
+const getOne = (table, params) => {
+  let keys = Object.keys(params).map(key => {
+    return `${key}=@${key}`;
+  });
+  let sql = `SELECT * FROM ${table} ${
+    keys.length > 0 ? "WHERE" : ""
+  } ${keys.join(" and ")}`;
+  console.log("-", sql);
+  const stmt = db.prepare(sql);
+  return stmt.get(params);
 };
 const saveOrUpdate = (table, values) => {
   values || (values = {});
   values._id || (values._id = uuid.v1());
-  const keys = entityList[table].map(item => item.name);
-  const saveValues = entityList[table].map(item => {
-    return values[item.name];
-  });
-  const stmt = db.prepare(
-    `INSERT OR REPLACE INTO ${table} (${keys.join(",")}) VALUES (${keys
-      .map(v => "?")
-      .join(",")})`
-  );
-  stmt.run(saveValues);
+  const keys = Object.keys(values);
+  let sql = `INSERT INTO ${table} (${keys.join(",")}) VALUES (${keys
+    .map(v => `@${v}`)
+    .join(",")})`;
+  let old = getById(table, values._id);
+  if (old && old._id) {
+    const updateFields = keys
+      .filter(v => v !== "_id")
+      .map(v => `${v}=@${v}`)
+      .join(",");
+    sql = `UPDATE ${table} SET ${updateFields} WHERE _id=@_id`;
+  }
+  console.log("-", sql);
+  const stmt = db.prepare(sql);
+  stmt.run(values);
+  return getById(table, values._id);
 };
 const del = (table, _id) => {
   const stmt = db.prepare(`DELETE FROM ${table} WHERE _id=?`);
@@ -77,7 +91,7 @@ const del = (table, _id) => {
 };
 const exeSql = (sql, v) => {
   const stmt = db.prepare(sql);
-  stmt.run(v);
+  v ? stmt.run(v) : stmt.run();
 };
 const queryBySql = (sql, v) => {
   const stmt = db.prepare(sql);
@@ -88,6 +102,7 @@ module.exports = {
   getById,
   all,
   query,
+  getOne,
   saveOrUpdate,
   del,
   exeSql,

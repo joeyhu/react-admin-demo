@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Router } from "react-router-dom";
 import intl from "react-intl-universal";
 import { ThemeProvider } from "@material-ui/styles";
 import { createBrowserHistory } from "history";
+import { reqApi } from "./api";
+import { connect } from "react-redux";
+import { updateProfile } from "./redux/actions";
 
 import "./assets/scss/index.scss";
 import "react-perfect-scrollbar/dist/css/styles.css";
@@ -19,9 +22,9 @@ const locales = {
   "zh-CN": zhCN
 };
 
-const browserHistory = createBrowserHistory();
+export const history = createBrowserHistory();
 
-export default function App() {
+function App(props) {
   let [initDone, setInitDone] = useState(false);
   intl
     .init({
@@ -30,17 +33,23 @@ export default function App() {
     })
     .then(() => {
       // After loading CLDR locale data, start to render
+    });
+
+  useEffect(() => {
+    reqApi.get("/User/profile").then(function(response) {
+      props.updateProfile(response.data);
       setInitDone(true);
     });
+  }, [props]);
 
   return (
     initDone && (
       <ThemeProvider theme={theme}>
-        <div>{intl.get("app_name")}</div>
-        <Router history={browserHistory}>
+        <Router history={history}>
           <Routes />
         </Router>
       </ThemeProvider>
     )
   );
 }
+export default connect(null, { updateProfile })(App);
