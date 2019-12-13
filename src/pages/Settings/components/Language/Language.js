@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const Notifications = props => {
+const Language = props => {
   const { className, ...rest } = props;
 
   const classes = useStyles();
@@ -61,8 +61,8 @@ const Notifications = props => {
   );
 };
 
-Notifications.propTypes = {
+Language.propTypes = {
   className: PropTypes.string
 };
 
-export default Notifications;
+export default Language;

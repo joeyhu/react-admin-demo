@@ -20,6 +20,7 @@ import {
 } from "@material-ui/core";
 
 import { getInitials } from "../../../../helpers";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -42,7 +43,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const UsersTable = props => {
-  const { className, users, ...rest } = props;
+  const { className, users, profile, setSelectIds, ...rest } = props;
 
   const classes = useStyles();
 
@@ -56,12 +57,15 @@ const UsersTable = props => {
     let selectedUsers;
 
     if (event.target.checked) {
-      selectedUsers = users.map(user => user.id);
+      selectedUsers = users
+        .filter(v => v._id !== profile._id)
+        .map(user => user._id);
     } else {
       selectedUsers = [];
     }
 
     setSelectedUsers(selectedUsers);
+    setSelectIds(selectedUsers);
   };
 
   const handleSelectOne = (event, id) => {
@@ -82,6 +86,7 @@ const UsersTable = props => {
     }
 
     setSelectedUsers(newSelectedUsers);
+    setSelectIds(newSelectedUsers);
   };
 
   const handlePageChange = (event, page) => {
@@ -102,11 +107,15 @@ const UsersTable = props => {
                 <TableRow>
                   <TableCell padding="checkbox">
                     <Checkbox
-                      checked={selectedUsers.length === users.length}
+                      checked={
+                        selectedUsers.length ===
+                        users.filter(v => v._id !== profile._id).length
+                      }
                       color="primary"
                       indeterminate={
                         selectedUsers.length > 0 &&
-                        selectedUsers.length < users.length
+                        selectedUsers.length <
+                          users.filter(v => v._id !== profile._id).length
                       }
                       onChange={handleSelectAll}
                     />
@@ -121,14 +130,15 @@ const UsersTable = props => {
                   <TableRow
                     className={classes.tableRow}
                     hover
-                    key={user.id}
-                    selected={selectedUsers.indexOf(user.id) !== -1}
+                    key={user._id}
+                    selected={selectedUsers.indexOf(user._id) !== -1}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
-                        checked={selectedUsers.indexOf(user.id) !== -1}
+                        disabled={profile._id === user._id}
+                        checked={selectedUsers.indexOf(user._id) !== -1}
                         color="primary"
-                        onChange={event => handleSelectOne(event, user.id)}
+                        onChange={event => handleSelectOne(event, user._id)}
                         value="true"
                       />
                     </TableCell>
@@ -138,6 +148,9 @@ const UsersTable = props => {
                           {getInitials(user.name)}
                         </Avatar>
                         <Typography variant="body1">{user.name}</Typography>
+                        <Typography variant="body1" color="textSecondary">
+                          {profile._id === user._id ? "(自己)" : ""}
+                        </Typography>
                       </div>
                     </TableCell>
                     <TableCell>{user.email}</TableCell>
@@ -169,4 +182,4 @@ UsersTable.propTypes = {
   users: PropTypes.array.isRequired
 };
 
-export default UsersTable;
+export default connect(state => state)(UsersTable);

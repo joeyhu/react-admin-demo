@@ -3,10 +3,15 @@ import { Link as RouterLink, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import validate from "validate.js";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, TextField, Link, Typography, Fade } from "@material-ui/core";
+import {
+  Button,
+  TextField,
+  Grid,
+  Link,
+  Typography,
+  Fade
+} from "@material-ui/core";
 
-import { connect } from "react-redux";
-import { updateProfile } from "../../redux/actions";
 import { reqApi } from "../../api";
 
 const schema = {
@@ -55,6 +60,7 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     margin: theme.spacing(2),
+    marginTop: theme.spacing(4),
     textAlign: "center"
   },
   textField: {
@@ -63,25 +69,26 @@ const useStyles = makeStyles(theme => ({
   signInButton: {
     margin: theme.spacing(2, 0)
   },
+  backButton: { margin: theme.spacing(2, 1) },
   errCon: {
     textAlign: "center",
     margin: theme.spacing(1, 0)
   }
 }));
 
-const SignUp = props => {
-  const { history, updateProfile } = props;
+const SaveUser = props => {
+  const { history, _id } = props;
 
   const classes = useStyles();
 
   const [formState, setFormState] = useState({
     isValid: false,
-    values: { email: "", password: "" },
+    values: { _id },
     touched: {},
     errors: {}
   });
   const [errMsg, setErrMsg] = useState("");
-
+  const [success, setSuccess] = useState(false);
   useEffect(() => {
     const errors = validate(formState.values, schema);
     setFormState(formState => ({
@@ -98,6 +105,7 @@ const SignUp = props => {
   const handleChange = event => {
     event.persist();
     setErrMsg("");
+    setSuccess(false);
     setFormState(formState => ({
       ...formState,
       values: {
@@ -114,14 +122,16 @@ const SignUp = props => {
     }));
   };
 
-  const handleSignUp = event => {
+  const handleSaveUser = event => {
     event.preventDefault();
     reqApi
-      .post("/User/signUp", formState.values)
+      .post("/User/saveOrUpdate", formState.values)
       .then(function(response) {
-        updateProfile(response.data);
-        sessionStorage.setItem("token", response.data.sessionFullStr);
-        history.push("/");
+        setSuccess(true);
+        setFormState(formState => ({
+          ...formState,
+          values: { ...formState.values, _id: response.data._id }
+        }));
       })
       .catch(e => {
         setErrMsg(e.response.data.errMsg);
@@ -133,9 +143,9 @@ const SignUp = props => {
 
   return (
     <div className={classes.root}>
-      <form className={classes.form} onSubmit={handleSignUp}>
+      <form className={classes.form} onSubmit={handleSaveUser}>
         <Typography className={classes.title} variant="h2">
-          Sign Up
+          {_id ? "Save User" : "Add new User"}
         </Typography>
         <TextField
           className={classes.textField}
@@ -188,34 +198,46 @@ const SignUp = props => {
           variant="outlined"
         />
         <Fade in={errMsg && errMsg.length > 0}>
-          <Typography className={classes.errCon} color="error">
+          <Typography
+            style={{ textAlign: "center" }}
+            className={classes.errCon}
+            color="error"
+          >
             {errMsg}
           </Typography>
         </Fade>
+
         <Button
           className={classes.signInButton}
           color="primary"
           disabled={!formState.isValid}
-          fullWidth
           size="large"
           type="submit"
           variant="contained"
         >
-          Sign in now
+          Save
         </Button>
-        <Typography color="textSecondary" variant="body1">
-          Have an account?{" "}
-          <Link component={RouterLink} to="/sign-in" variant="h6">
-            Sign in
-          </Link>
-        </Typography>
+        <Button
+          className={classes.backButton}
+          color="primary"
+          to="/users"
+          component={RouterLink}
+          size="large"
+          variant="outlined"
+        >
+          Back
+        </Button>
+        <Fade in={success}>
+          <span style={{ textAlign: "center", color: "green" }}>
+            保存成功！
+          </span>
+        </Fade>
       </form>
     </div>
   );
 };
 
-SignUp.propTypes = {
+SaveUser.propTypes = {
   history: PropTypes.object
 };
-export default withRouter(connect(null, { updateProfile })(SignUp));
-// export default withRouter(SignUp);
+export default withRouter(SaveUser);

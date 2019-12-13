@@ -15,13 +15,14 @@ import AppsIcon from "@material-ui/icons/Apps";
 import SettingsIcon from "@material-ui/icons/Settings";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
+import WbIncandescentIcon from "@material-ui/icons/WbIncandescent";
 
 import { Menu, MenuItem, ListItemIcon, ListItemText } from "@material-ui/core";
 // import NotificationsIcon from "@material-ui/icons/NotificationsOutlined";
 // import InputIcon from "@material-ui/icons/Input";
 
 import { connect } from "react-redux";
-import { updateProfile } from "../../../../redux/actions";
+import { updateProfile, updateSetting } from "../../../../redux/actions";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,16 +38,25 @@ const useStyles = makeStyles(theme => ({
 const SignOutMenuItem = withStyles(theme => ({
   root: {
     "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
-      color: theme.palette.secondary.dark
+      color: theme.palette.secondary
     }
   }
 }))(MenuItem);
 
 const Topbar = props => {
-  const { className, history, updateProfile, onSidebarOpen, ...rest } = props;
+  const {
+    className,
+    history,
+    setting,
+    updateProfile,
+    updateSetting,
+    onSidebarOpen,
+    ...rest
+  } = props;
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const { dark } = setting;
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
@@ -54,6 +64,10 @@ const Topbar = props => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const changeDark = () => {
+    handleClose();
+    updateSetting({ ...setting, dark: !dark });
   };
   const signOut = () => {
     handleClose();
@@ -71,6 +85,10 @@ const Topbar = props => {
           快易帮™ 后台管理
         </Typography>
         <div className={classes.flexGrow} />
+
+        <IconButton color={dark ? "secondary" : "inherit"} onClick={changeDark}>
+          <WbIncandescentIcon />
+        </IconButton>
         <IconButton color="inherit" onClick={handleClick}>
           <Badge className={classes.margin} badgeContent={10} color="secondary">
             <AppsIcon />
@@ -116,4 +134,6 @@ Topbar.propTypes = {
   onSidebarOpen: PropTypes.func
 };
 
-export default connect(null, { updateProfile })(Topbar);
+export default connect(state => state, { updateProfile, updateSetting })(
+  Topbar
+);

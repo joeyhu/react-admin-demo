@@ -9,14 +9,15 @@
     "@material-ui/styles": "^4.6.0",
     "axios": "^0.19.0",
     "better-sqlite3": "^5.4.3",
+    "chart.js": "^2.9.3",
     "clsx": "^1.0.4",
-    "fetch-mock": "^7.7.3",
     "history": "^4.10.1",
     "memory-cache": "^0.2.0",
     "moment": "^2.24.0",
     "node-sass": "^4.13.0",
     "prop-types": "^15.7.2",
     "react": "^16.11.0",
+    "react-chartjs-2": "^2.8.0",
     "react-dom": "^16.11.0",
     "react-intl-universal": "^2.2.1",
     "react-perfect-scrollbar": "^1.5.3",
@@ -61,7 +62,6 @@
     "koa-static": "^5.0.0",
     "koa-views": "^6.2.1",
     "mocha": "^6.2.2",
-    "mockjs": "^1.1.0",
     "restc": "^0.4.0"
   }
 }

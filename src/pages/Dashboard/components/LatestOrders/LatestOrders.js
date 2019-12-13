@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import clsx from 'clsx';
-import moment from 'moment';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/styles';
+import React, { useState } from "react";
+import clsx from "clsx";
+import moment from "moment";
+import PerfectScrollbar from "react-perfect-scrollbar";
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/styles";
 import {
   Card,
   CardActions,
@@ -18,11 +18,11 @@ import {
   TableRow,
   Tooltip,
   TableSortLabel
-} from '@material-ui/core';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+} from "@material-ui/core";
+import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 
-import mockData from './data';
-import { StatusBullet } from 'components';
+import mockData from "./data";
+import { StatusBullet } from "../../../../components";
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -33,21 +33,21 @@ const useStyles = makeStyles(theme => ({
     minWidth: 800
   },
   statusContainer: {
-    display: 'flex',
-    alignItems: 'center'
+    display: "flex",
+    alignItems: "center"
   },
   status: {
     marginRight: theme.spacing(1)
   },
   actions: {
-    justifyContent: 'flex-end'
+    justifyContent: "flex-end"
   }
 }));
 
 const statusColors = {
-  delivered: 'success',
-  pending: 'info',
-  refunded: 'danger'
+  delivered: "success",
+  pending: "info",
+  refunded: "danger"
 };
 
 const LatestOrders = props => {
@@ -58,17 +58,10 @@ const LatestOrders = props => {
   const [orders] = useState(mockData);
 
   return (
-    <Card
-      {...rest}
-      className={clsx(classes.root, className)}
-    >
+    <Card {...rest} className={clsx(classes.root, className)}>
       <CardHeader
         action={
-          <Button
-            color="primary"
-            size="small"
-            variant="outlined"
-          >
+          <Button color="primary" size="small" variant="outlined">
             New entry
           </Button>
         }
@@ -84,14 +77,8 @@ const LatestOrders = props => {
                   <TableCell>Order Ref</TableCell>
                   <TableCell>Customer</TableCell>
                   <TableCell sortDirection="desc">
-                    <Tooltip
-                      enterDelay={300}
-                      title="Sort"
-                    >
-                      <TableSortLabel
-                        active
-                        direction="desc"
-                      >
+                    <Tooltip enterDelay={300} title="Sort">
+                      <TableSortLabel active direction="desc">
                         Date
                       </TableSortLabel>
                     </Tooltip>
@@ -101,14 +88,11 @@ const LatestOrders = props => {
               </TableHead>
               <TableBody>
                 {orders.map(order => (
-                  <TableRow
-                    hover
-                    key={order.id}
-                  >
+                  <TableRow hover key={order.id}>
                     <TableCell>{order.ref}</TableCell>
                     <TableCell>{order.customer.name}</TableCell>
                     <TableCell>
-                      {moment(order.createdAt).format('DD/MM/YYYY')}
+                      {moment(order.createdAt).format("DD/MM/YYYY")}
                     </TableCell>
                     <TableCell>
                       <div className={classes.statusContainer}>
@@ -129,11 +113,7 @@ const LatestOrders = props => {
       </CardContent>
       <Divider />
       <CardActions className={classes.actions}>
-        <Button
-          color="primary"
-          size="small"
-          variant="text"
-        >
+        <Button color="primary" size="small" variant="text">
           View all <ArrowRightIcon />
         </Button>
       </CardActions>

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Router } from "react-router-dom";
 import intl from "react-intl-universal";
-import { ThemeProvider } from "@material-ui/styles";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { createBrowserHistory } from "history";
 import { reqApi } from "./api";
 import { connect } from "react-redux";
 import { updateProfile } from "./redux/actions";
-
+import { CssBaseline } from "@material-ui/core";
 import "./assets/scss/index.scss";
 import "react-perfect-scrollbar/dist/css/styles.css";
 
-import theme from "./theme";
+import cTheme from "./theme";
 import Routes from "./routes/index";
 
 import enUS from "./locales/en-US.js";
@@ -25,8 +25,14 @@ const locales = {
 export const history = createBrowserHistory();
 
 function App(props) {
-  const { updateProfile } = props;
+  const { updateProfile, setting } = props;
   let [initDone, setInitDone] = useState(false);
+
+  const { dark } = setting;
+  console.log(dark);
+  cTheme.palette.type = dark ? "dark" : "light";
+  let [theme, setTheme] = useState(cTheme);
+
   intl
     .init({
       currentLocale: "en-US", // TODO: determine locale here
@@ -37,25 +43,34 @@ function App(props) {
     });
 
   useEffect(() => {
+    theme.palette.type = dark ? "dark" : "light";
+    setTheme(theme);
+
     const token = sessionStorage.getItem("token");
     if (token && token.length) {
-      reqApi.get("/User/profile").then(function(response) {
-        updateProfile(response.data);
-        setInitDone(true);
-      });
+      reqApi
+        .get("/User/profile")
+        .then(function(response) {
+          updateProfile(response.data);
+          setInitDone(true);
+        })
+        .catch(e => {
+          setInitDone(true);
+        });
     } else {
       setInitDone(true);
     }
-  }, [props, updateProfile]);
-
+  }, [dark, theme, updateProfile]);
+  const muiTheme = createMuiTheme(theme);
   return (
     initDone && (
-      <ThemeProvider theme={theme}>
+      <MuiThemeProvider theme={muiTheme}>
+        <CssBaseline />
         <Router history={history}>
           <Routes />
         </Router>
-      </ThemeProvider>
+      </MuiThemeProvider>
     )
   );
 }
-export default connect(null, { updateProfile })(App);
+export default connect(state => state, { updateProfile })(App);

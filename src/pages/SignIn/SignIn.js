@@ -67,7 +67,7 @@ const SignIn = props => {
 
   const [formState, setFormState] = useState({
     isValid: false,
-    values: { email: "joey@gmail.com", password: "joey" },
+    values: {},
     touched: {},
     errors: {}
   });
@@ -157,7 +157,7 @@ const SignIn = props => {
           value={formState.values.password || ""}
           variant="outlined"
         />
-        <Fade in={errMsg.length > 0}>
+        <Fade in={errMsg && errMsg.length > 0}>
           <Typography className={classes.errCon} color="error">
             {errMsg}
           </Typography>

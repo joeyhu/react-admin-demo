@@ -163,7 +163,7 @@ const AccountDetails = props => {
           >
             Save details
           </Button>
-          <Fade in={errMsg.length > 0}>
+          <Fade in={errMsg && errMsg.length > 0}>
             <Typography className={classes.errCon} color="error">
               {errMsg}
             </Typography>

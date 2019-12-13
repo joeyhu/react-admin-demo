@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/styles";
-import { Button } from "@material-ui/core";
+import { Button, Fade, Typography } from "@material-ui/core";
+import { Link as RouterLink } from "react-router-dom";
+
+import { reqApi } from "../../../../api";
 
 // import { SearchInput } from "components";
 
@@ -19,34 +22,61 @@ const useStyles = makeStyles(theme => ({
   },
   importButton: {
     marginRight: theme.spacing(1)
-  },
-  exportButton: {
-    marginRight: theme.spacing(1)
-  },
-  searchInput: {
-    marginRight: theme.spacing(1)
   }
 }));
 
 const UsersToolbar = props => {
-  const { className, ...rest } = props;
+  const { className, selectIds, setSelectIds, getUserList, ...rest } = props;
+  const [success, setSuccess] = useState(false);
 
   const classes = useStyles();
+  const delUser = () => {
+    reqApi
+      .post("/User/delMore", { ids: selectIds.join(",") })
+      .then(function(response) {
+        getUserList();
+        setSelectIds([]);
+        setSuccess(true);
+        setTimeout(() => {
+          setSuccess(false);
+        }, 3000);
+      });
+  };
 
   return (
     <div {...rest} className={clsx(classes.root, className)}>
       <div className={classes.row}>
-        <span className={classes.spacer} />
         <Button
           color="primary"
+          component={RouterLink}
+          className={classes.importButton}
+          to="/save-user"
+          variant="contained"
+        >
+          Add user
+        </Button>
+        <Button
+          color="secondary"
           variant="outlined"
-          className={classes.exportButton}
+          disabled={selectIds.length === 0}
+          className={classes.importButton}
+          onClick={delUser}
         >
           Delete
         </Button>
-        <Button color="primary" variant="contained">
-          Add user
-        </Button>
+        <Fade
+          className={classes.importButton}
+          in={selectIds && selectIds.length > 0}
+        >
+          <Typography className={classes.errCon} color="primary">
+            选择 {selectIds && selectIds.length} 条数据
+          </Typography>
+        </Fade>
+        <Fade className={classes.importButton} in={success}>
+          <Typography color="primary">删除成功</Typography>
+        </Fade>
+
+        <span className={classes.spacer} />
       </div>
     </div>
   );

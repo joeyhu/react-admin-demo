@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/styles";
-import { useMediaQuery } from "@material-ui/core";
+import { Box, useMediaQuery } from "@material-ui/core";
 
 import { Sidebar, Topbar, Footer } from "./components";
 
@@ -44,7 +44,7 @@ const Main = props => {
   const shouldOpenSidebar = isDesktop ? true : openSidebar;
 
   return (
-    <div
+    <Box
       className={clsx({
         [classes.root]: true,
         [classes.shiftContent]: isDesktop
@@ -60,7 +60,7 @@ const Main = props => {
         {children}
         <Footer />
       </main>
-    </div>
+    </Box>
   );
 };
 

@@ -1,1 +1,2 @@
 export const UPDATE_PROFILE = "UPDATE_PROFILE";
+export const UPDATE_SETTING = "UPDATE_SETTING";

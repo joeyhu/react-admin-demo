@@ -11,7 +11,8 @@ import {
   Account as AccountView,
   Settings as SettingsView,
   NotFound as NotFoundView,
-  UserList as UserListView
+  UserList as UserListView,
+  SaveUser as SaveUserView
 } from "../pages";
 
 const Routes = () => {
@@ -32,6 +33,14 @@ const Routes = () => {
         layout={MainLayout}
         path="/users"
       />
+      <RouteWithLayout
+        component={SaveUserView}
+        exact
+        isAuth={true}
+        layout={MainLayout}
+        path="/save-user"
+      />
+
       <RouteWithLayout
         component={SignInView}
         exact

@@ -22,17 +22,18 @@ let signIn = ctx => {
   delete session.password;
   ctx.body = session;
 };
-let signUp = ctx => {
-  let { email, password, name, phone } = ctx.request.body;
+let saveOrUpdate = ctx => {
+  let { email, password, name, phone, _id } = ctx.request.body;
+  _id || (_id = uuid.v1());
   const user = SqliteService.getOne(ctx.entity, { email });
-  if (user && user._id) {
+  if (user && user._id !== _id) {
     throw new Error("email exists!");
   }
   const passwordDigest = crypto
     .createHash("SHA256")
     .update(password)
     .digest("hex");
-  const _id = uuid.v1();
+
   SqliteService.saveOrUpdate(ctx.entity, {
     _id,
     email,
@@ -40,6 +41,11 @@ let signUp = ctx => {
     name,
     phone
   });
+  ctx.request.body._id = _id;
+  Controller["GET /show"](ctx);
+};
+let signUp = ctx => {
+  saveOrUpdate(ctx);
   //注册成功，自动登录
   signIn(ctx);
 };
@@ -64,11 +70,27 @@ let setProfile = ctx => {
   delete user.password;
   ctx.body = user;
 };
-
+let changePassword = ctx => {
+  if (!ctx.currentUserId) {
+    ctx.status = 401;
+    throw new Error("not sign in!");
+  }
+  const { password } = ctx.request.body;
+  SqliteService.saveOrUpdate(ctx.entity, {
+    _id: ctx.currentUserId,
+    password: crypto
+      .createHash("SHA256")
+      .update(password)
+      .digest("hex")
+  });
+  ctx.body = {};
+};
 const inc = {};
 Object.assign(inc, Controller);
 inc["POST /signIn"] = signIn;
 inc["POST /signUp"] = signUp;
+inc["POST /saveOrUpdate"] = saveOrUpdate;
 inc["POST /setProfile"] = setProfile;
+inc["POST /changePassword"] = changePassword;
 inc["GET /profile"] = profile;
 module.exports = inc;

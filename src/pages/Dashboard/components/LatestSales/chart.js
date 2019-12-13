@@ -1,15 +1,15 @@
-import palette from 'theme/palette';
+import palette from "../../../../theme/palette";
 
 export const data = {
-  labels: ['1 Aug', '2 Aug', '3 Aug', '4 Aug', '5 Aug', '6 Aug'],
+  labels: ["1 Aug", "2 Aug", "3 Aug", "4 Aug", "5 Aug", "6 Aug"],
   datasets: [
     {
-      label: 'This year',
+      label: "This year",
       backgroundColor: palette.primary.main,
       data: [18, 5, 19, 27, 29, 19, 20]
     },
     {
-      label: 'Last year',
+      label: "Last year",
       backgroundColor: palette.neutral,
       data: [11, 20, 12, 29, 30, 25, 13]
     }
@@ -24,14 +24,14 @@ export const options = {
   cornerRadius: 20,
   tooltips: {
     enabled: true,
-    mode: 'index',
+    mode: "index",
     intersect: false,
-    borderWidth: 1,
-    borderColor: palette.divider,
-    backgroundColor: palette.white,
-    titleFontColor: palette.text.primary,
-    bodyFontColor: palette.text.secondary,
-    footerFontColor: palette.text.secondary
+    borderWidth: 1
+    // borderColor: palette.divider,
+    // backgroundColor: palette.white,
+    // titleFontColor: palette.text.primary,
+    // bodyFontColor: palette.text.secondary,
+    // footerFontColor: palette.text.secondary
   },
   layout: { padding: 0 },
   scales: {
@@ -42,7 +42,7 @@ export const options = {
         barPercentage: 0.5,
         categoryPercentage: 0.5,
         ticks: {
-          fontColor: palette.text.secondary
+          // fontColor: palette.text.secondary
         },
         gridLines: {
           display: false,
@@ -53,7 +53,7 @@ export const options = {
     yAxes: [
       {
         ticks: {
-          fontColor: palette.text.secondary,
+          // fontColor: palette.text.secondary,
           beginAtZero: true,
           min: 0
         },

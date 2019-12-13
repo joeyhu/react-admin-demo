@@ -17,7 +17,14 @@ let save = ctx => {
 };
 
 let del = ctx => {
-  ctx.body = SqliteService.del(ctx.entity, ctx.request.body._id);
+  SqliteService.del(ctx.entity, ctx.request.body._id);
+  ctx.body = {};
+};
+let delMore = ctx => {
+  ctx.request.body.ids.split(",").forEach(v => {
+    SqliteService.del(ctx.entity, v);
+  });
+  ctx.body = {};
 };
 
 module.exports = {
@@ -25,5 +32,6 @@ module.exports = {
   "GET /show": show,
   "GET /query": query,
   "POST /save": save,
-  "POST /del": del
+  "POST /del": del,
+  "POST /delMore": delMore
 };

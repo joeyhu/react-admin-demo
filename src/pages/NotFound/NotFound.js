@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/styles";
-import { Grid, Typography, Button } from "@material-ui/core";
+import { Grid, Box, Typography, Button } from "@material-ui/core";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 const useStyles = makeStyles(theme => ({
@@ -27,13 +27,10 @@ const NotFound = props => {
     <div className={classes.root}>
       <Grid container justify="center" spacing={4}>
         <Grid item lg={6} xs={12}>
-          <div className={classes.content}>
-            <Typography variant="h1" color="textSecondary">
-              404: 页面未找到
-            </Typography>
+          <Box className={classes.content}>
+            <Typography variant="h1">404: 页面未找到</Typography>
 
             <Button
-              color="textSecondary"
               variant="outlined"
               onClick={handleBack}
               className={classes.button}
@@ -41,7 +38,7 @@ const NotFound = props => {
             >
               Back
             </Button>
-          </div>
+          </Box>
         </Grid>
       </Grid>
     </div>
