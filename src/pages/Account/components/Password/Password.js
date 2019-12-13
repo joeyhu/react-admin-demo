@@ -18,6 +18,7 @@ import {
 import { connect } from "react-redux";
 import { reqApi } from "../../../../api";
 import { updateProfile } from "../../../../redux/actions";
+import intl from "react-intl-universal";
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -113,7 +114,10 @@ const Password = props => {
   return (
     <Card {...rest} className={clsx(classes.root, className)}>
       <form onSubmit={handleSave}>
-        <CardHeader subheader="Update password" title="Password" />
+        <CardHeader
+          // subheader={intl.get("update_password")}
+          title={intl.get("field_password")}
+        />
         <Divider />
         <CardContent>
           <TextField
@@ -122,7 +126,7 @@ const Password = props => {
             helperText={
               hasError("password") ? formState.errors.password[0] : null
             }
-            label="Password"
+            label={intl.get("field_password")}
             name="password"
             onChange={handleChange}
             type="password"
@@ -131,7 +135,7 @@ const Password = props => {
           />
           <TextField
             fullWidth
-            label="Confirm password"
+            label={intl.get("field_confirm_password")}
             name="confirm"
             error={hasError("confirm")}
             onChange={handleChange}
@@ -144,7 +148,7 @@ const Password = props => {
         <Divider />
         <CardActions>
           <Button color="primary" type="submit" variant="contained">
-            Update
+            {intl.get("update")}
           </Button>
           <Fade in={errMsg && errMsg.length > 0}>
             <Typography className={classes.errCon} color="error">
@@ -153,7 +157,7 @@ const Password = props => {
           </Fade>
           <Fade in={Boolean(success)}>
             <Typography className={classes.errCon} color="primary">
-              成功修改密码
+              {intl.get("success")}
             </Typography>
           </Fade>
         </CardActions>

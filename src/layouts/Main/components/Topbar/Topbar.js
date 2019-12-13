@@ -3,12 +3,14 @@ import { Link as RouterLink, withRouter } from "react-router-dom";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import { makeStyles, withStyles } from "@material-ui/styles";
+import intl from "react-intl-universal";
 import {
   AppBar,
   Toolbar,
   Badge,
   Typography,
-  IconButton
+  IconButton,
+  Button
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import AppsIcon from "@material-ui/icons/Apps";
@@ -16,6 +18,7 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import WbIncandescentIcon from "@material-ui/icons/WbIncandescent";
+import TranslateIcon from "@material-ui/icons/Translate";
 
 import { Menu, MenuItem, ListItemIcon, ListItemText } from "@material-ui/core";
 // import NotificationsIcon from "@material-ui/icons/NotificationsOutlined";
@@ -23,6 +26,7 @@ import { Menu, MenuItem, ListItemIcon, ListItemText } from "@material-ui/core";
 
 import { connect } from "react-redux";
 import { updateProfile, updateSetting } from "../../../../redux/actions";
+import { SUPPOER_LOCALES, SUPPOER_LOCALES_MAP } from "../../../../locales";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -47,6 +51,7 @@ const Topbar = props => {
   const {
     className,
     history,
+    profile,
     setting,
     updateProfile,
     updateSetting,
@@ -56,14 +61,25 @@ const Topbar = props => {
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const { dark } = setting;
+  const [langEl, setLangEl] = React.useState(null);
+
+  const { dark, language } = setting;
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
 
+  const changeLanguage = event => {
+    setLangEl(event.currentTarget);
+  };
+  const selectLanguage = lang => {
+    console.log(lang);
+    handleClose();
+    updateSetting({ ...setting, language: lang });
+  };
   const handleClose = () => {
     setAnchorEl(null);
+    setLangEl(null);
   };
   const changeDark = () => {
     handleClose();
@@ -78,22 +94,62 @@ const Topbar = props => {
   return (
     <AppBar {...rest} className={clsx(classes.root, className)}>
       <Toolbar>
-        <IconButton color="inherit" onClick={onSidebarOpen}>
-          <MenuIcon />
-        </IconButton>
-        <Typography color="inherit" component={RouterLink} to="/">
-          快易帮™ 后台管理
+        {profile !== undefined &&
+          profile._id !== undefined &&
+          profile._id.length > 0 && (
+            <IconButton color="inherit" onClick={onSidebarOpen}>
+              <MenuIcon />
+            </IconButton>
+          )}
+        <Typography variant="h5" color="inherit" component={RouterLink} to="/">
+          {intl.get("app_name")}
         </Typography>
         <div className={classes.flexGrow} />
+
+        <Button
+          color="inherit"
+          startIcon={<TranslateIcon />}
+          onClick={changeLanguage}
+        >
+          {SUPPOER_LOCALES_MAP[language].name}
+        </Button>
+        <Menu
+          id="language-menu"
+          anchorEl={langEl}
+          keepMounted
+          open={Boolean(langEl)}
+          onClose={handleClose}
+        >
+          {SUPPOER_LOCALES.map(v => (
+            <MenuItem
+              onClick={() => {
+                selectLanguage(v.value);
+              }}
+            >
+              <ListItemIcon>
+                <TranslateIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary={v.name} />
+            </MenuItem>
+          ))}
+        </Menu>
 
         <IconButton color={dark ? "secondary" : "inherit"} onClick={changeDark}>
           <WbIncandescentIcon />
         </IconButton>
-        <IconButton color="inherit" onClick={handleClick}>
-          <Badge className={classes.margin} badgeContent={10} color="secondary">
-            <AppsIcon />
-          </Badge>
-        </IconButton>
+        {profile !== undefined &&
+          profile._id !== undefined &&
+          profile._id.length > 0 && (
+            <IconButton color="inherit" onClick={handleClick}>
+              <Badge
+                className={classes.margin}
+                badgeContent={10}
+                color="secondary"
+              >
+                <AppsIcon />
+              </Badge>
+            </IconButton>
+          )}
         <Menu
           id="simple-menu"
           anchorEl={anchorEl}
@@ -105,13 +161,13 @@ const Topbar = props => {
             <ListItemIcon>
               <AccountBoxIcon fontSize="small" />
             </ListItemIcon>
-            <ListItemText primary="Profile" />
+            <ListItemText primary={intl.get("sidebar_account")} />
           </MenuItem>
           <MenuItem component={RouterLink} to="/settings" onClick={handleClose}>
             <ListItemIcon>
               <SettingsIcon fontSize="small" />
             </ListItemIcon>
-            <ListItemText primary="Settings" />
+            <ListItemText primary={intl.get("sidebar_settings")} />
           </MenuItem>
           <SignOutMenuItem
             component={RouterLink}
@@ -121,7 +177,7 @@ const Topbar = props => {
             <ListItemIcon>
               <ExitToAppIcon fontSize="small" />
             </ListItemIcon>
-            <ListItemText primary="SignOut" />
+            <ListItemText primary={intl.get("sign_out")} />
           </SignOutMenuItem>
         </Menu>
       </Toolbar>

@@ -8,6 +8,7 @@ import PeopleIcon from "@material-ui/icons/People";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import SettingsIcon from "@material-ui/icons/Settings";
+import intl from "react-intl-universal";
 
 import { Profile, SidebarNav } from "./components";
 
@@ -41,27 +42,27 @@ const Sidebar = props => {
 
   const pages = [
     {
-      title: "Dashboard",
+      title: intl.get("sidebar_dashboard"),
       href: "/dashboard",
       icon: <DashboardIcon />
     },
     {
-      title: "Users",
+      title: intl.get("sidebar_users"),
       href: "/users",
       icon: <PeopleIcon />
     },
     {
-      title: "Products",
+      title: intl.get("sidebar_products"),
       href: "/products",
       icon: <ShoppingBasketIcon />
     },
     {
-      title: "Account",
+      title: intl.get("sidebar_account"),
       href: "/account",
       icon: <AccountBoxIcon />
     },
     {
-      title: "Settings",
+      title: intl.get("sidebar_settings"),
       href: "/settings",
       icon: <SettingsIcon />
     }

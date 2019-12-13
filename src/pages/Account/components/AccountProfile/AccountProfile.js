@@ -13,6 +13,7 @@ import {
 import { UploadFile } from "../../../../components";
 import { updateProfile } from "../../../../redux/actions";
 import { reqApi } from "../../../../api";
+import intl from "react-intl-universal";
 
 const useStyles = makeStyles(theme => ({
   root: {},

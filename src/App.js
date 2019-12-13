@@ -9,58 +9,48 @@ import { updateProfile } from "./redux/actions";
 import { CssBaseline } from "@material-ui/core";
 import "./assets/scss/index.scss";
 import "react-perfect-scrollbar/dist/css/styles.css";
+import _ from "lodash";
 
 import cTheme from "./theme";
+import { SUPPOER_LOCALES, locales } from "./locales";
 import Routes from "./routes/index";
-
-import enUS from "./locales/en-US.js";
-import zhCN from "./locales/zh-CN.js";
-
-// locale data
-const locales = {
-  "en-US": enUS,
-  "zh-CN": zhCN
-};
 
 export const history = createBrowserHistory();
 
-function App(props) {
+const App = props => {
   const { updateProfile, setting } = props;
   let [initDone, setInitDone] = useState(false);
 
-  const { dark } = setting;
+  const { dark, language } = setting;
   console.log(dark);
   cTheme.palette.type = dark ? "dark" : "light";
   let [theme, setTheme] = useState(cTheme);
 
-  intl
-    .init({
-      currentLocale: "en-US", // TODO: determine locale here
-      locales
-    })
-    .then(() => {
-      // After loading CLDR locale data, start to render
-    });
-
   useEffect(() => {
-    theme.palette.type = dark ? "dark" : "light";
-    setTheme(theme);
+    const f = async () => {
+      theme.palette.type = dark ? "dark" : "light";
+      setTheme(theme);
 
-    const token = sessionStorage.getItem("token");
-    if (token && token.length) {
-      reqApi
-        .get("/User/profile")
-        .then(function(response) {
-          updateProfile(response.data);
-          setInitDone(true);
-        })
-        .catch(e => {
-          setInitDone(true);
-        });
-    } else {
+      let currentLocale = language;
+      if (!_.find(SUPPOER_LOCALES, { value: currentLocale })) {
+        currentLocale = "en-US";
+      }
+
+      await intl.init({
+        currentLocale, // TODO: determine locale here
+        locales
+        // locales: { [currentLocale]: require(`./locales/${currentLocale}.js`) }
+      });
+      const token = sessionStorage.getItem("token");
+      if (token && token.length) {
+        const response = await reqApi.get("/User/profile");
+        updateProfile(response.data);
+      }
       setInitDone(true);
-    }
-  }, [dark, theme, updateProfile]);
+    };
+    f();
+  }, [dark, language, theme, updateProfile]);
+
   const muiTheme = createMuiTheme(theme);
   return (
     initDone && (
@@ -72,5 +62,5 @@ function App(props) {
       </MuiThemeProvider>
     )
   );
-}
+};
 export default connect(state => state, { updateProfile })(App);

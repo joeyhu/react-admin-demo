@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/styles";
 import { Grid, Box, Typography, Button } from "@material-ui/core";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import intl from "react-intl-universal";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,7 +29,9 @@ const NotFound = props => {
       <Grid container justify="center" spacing={4}>
         <Grid item lg={6} xs={12}>
           <Box className={classes.content}>
-            <Typography variant="h1">404: 页面未找到</Typography>
+            <Typography variant="h1">
+              404: {intl.get("page_not_found")}
+            </Typography>
 
             <Button
               variant="outlined"
@@ -36,7 +39,7 @@ const NotFound = props => {
               className={classes.button}
               startIcon={<ArrowBackIcon />}
             >
-              Back
+              {intl.get("go_back")}
             </Button>
           </Box>
         </Grid>

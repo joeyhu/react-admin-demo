@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/styles";
 import { Typography } from "@material-ui/core";
+import intl from "react-intl-universal";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,7 +24,7 @@ const Footer = props => {
         color="textSecondary"
         style={{ textAlign: "center" }}
       >
-        &copy; 2019 成都志前科技有限公司
+        &copy; 2019 {intl.get("company")}
       </Typography>
     </div>
   );

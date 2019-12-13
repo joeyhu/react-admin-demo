@@ -13,6 +13,8 @@ import {
 } from "@material-ui/core";
 import { connect } from "react-redux";
 import { updateSetting } from "../../../../redux/actions";
+import intl from "react-intl-universal";
+
 const useStyles = makeStyles(() => ({
   root: {},
   item: {
@@ -33,7 +35,7 @@ const Theme = props => {
   return (
     <Card {...rest} className={clsx(classes.root, className)}>
       <form>
-        <CardHeader title="皮肤风格" />
+        <CardHeader title={intl.get("theme")} />
         <Divider />
         <CardContent>
           <Grid className={classes.item} item md={4} sm={6} xs={12}>
@@ -46,7 +48,9 @@ const Theme = props => {
                   color="primary"
                 />
               }
-              label={setting.dark ? "黑夜模式" : "白天模式"}
+              label={
+                setting.dark ? intl.get("theme_dark") : intl.get("theme_light")
+              }
             />
           </Grid>
         </CardContent>

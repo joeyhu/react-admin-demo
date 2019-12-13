@@ -19,6 +19,7 @@ import {
 import { connect } from "react-redux";
 import { updateProfile } from "../../../../redux/actions";
 import { reqApi } from "../../../../api";
+import intl from "react-intl-universal";
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -101,7 +102,7 @@ const AccountDetails = props => {
   return (
     <Card {...rest} className={clsx(classes.root, className)}>
       <form autoComplete="on" onSubmit={handleSave}>
-        <CardHeader subheader="The information can be edited" title="Profile" />
+        <CardHeader title={intl.get("sidebar_account")} />
         <Divider />
         <CardContent>
           <Grid container spacing={3}>
@@ -111,7 +112,7 @@ const AccountDetails = props => {
                 error={hasError("name")}
                 fullWidth
                 helperText={hasError("name") ? formState.errors.name[0] : null}
-                label="Name"
+                label={intl.get("field_name")}
                 name="name"
                 onChange={handleChange}
                 type="text"
@@ -127,7 +128,7 @@ const AccountDetails = props => {
                 helperText={
                   hasError("email") ? formState.errors.email[0] : null
                 }
-                label="Email address"
+                label={intl.get("field_email")}
                 name="email"
                 onChange={handleChange}
                 type="text"
@@ -143,7 +144,7 @@ const AccountDetails = props => {
                 helperText={
                   hasError("phone") ? formState.errors.phone[0] : null
                 }
-                label="Phone Number"
+                label={intl.get("field_phone")}
                 name="phone"
                 onChange={handleChange}
                 type="text"
@@ -161,7 +162,7 @@ const AccountDetails = props => {
             type="submit"
             variant="contained"
           >
-            Save details
+            {intl.get("save")}
           </Button>
           <Fade in={errMsg && errMsg.length > 0}>
             <Typography className={classes.errCon} color="error">
