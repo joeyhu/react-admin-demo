@@ -1,11 +1,10 @@
 const assert = require("assert");
-const Sqlite = require("../db/Sqlite");
+const Sqlite = require("../service/SqliteService");
 const uuid = require("uuid");
 describe("#Sqlite.js", () => {
   describe("#init()", () => {
     it("init", () => {
       Sqlite.init();
-      //
     });
   });
   describe("#saveOrUpdate()", () => {
