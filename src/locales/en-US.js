@@ -5,7 +5,7 @@ export default {
   sidebar_dashboard: "Dashboard",
   sidebar_users: "Users",
   sidebar_products: "Products",
-  sidebar_account: "Project",
+  sidebar_account: "Profile",
   sidebar_settings: "Settings",
   sign_out: "Sign out",
   sign_in: "Sign in",
@@ -24,6 +24,8 @@ export default {
   update_password: "Update password",
   update: "Update",
   save: "Save",
+  delete: "Delete",
+  self: "Self",
   success: "Successful!",
   page_not_found: "Page not found!",
   go_back: "Back"

@@ -3,6 +3,8 @@ import { Link as RouterLink, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import validate from "validate.js";
 import { makeStyles } from "@material-ui/core/styles";
+import intl from "react-intl-universal";
+
 import {
   Button,
   TextField,
@@ -215,7 +217,7 @@ const SaveUser = props => {
           type="submit"
           variant="contained"
         >
-          Save
+          {intl.get("save")}
         </Button>
         <Button
           className={classes.backButton}
@@ -225,11 +227,11 @@ const SaveUser = props => {
           size="large"
           variant="outlined"
         >
-          Back
+          {intl.get("back")}
         </Button>
         <Fade in={success}>
           <span style={{ textAlign: "center", color: "green" }}>
-            保存成功！
+            {intl.get("success")}
           </span>
         </Fade>
       </form>

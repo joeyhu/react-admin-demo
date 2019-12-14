@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { makeStyles } from "@material-ui/styles";
 import { Button, Fade, Typography } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
+import intl from "react-intl-universal";
 
 import { reqApi } from "../../../../api";
 
@@ -53,7 +54,7 @@ const UsersToolbar = props => {
           to="/save-user"
           variant="contained"
         >
-          Add user
+          {intl.get("field_add_user")}
         </Button>
         <Button
           color="secondary"
@@ -62,7 +63,7 @@ const UsersToolbar = props => {
           className={classes.importButton}
           onClick={delUser}
         >
-          Delete
+          {intl.get("delete")}
         </Button>
         <Fade
           className={classes.importButton}
@@ -73,7 +74,7 @@ const UsersToolbar = props => {
           </Typography>
         </Fade>
         <Fade className={classes.importButton} in={success}>
-          <Typography color="primary">删除成功</Typography>
+          <Typography color="primary">{intl.get("success")}</Typography>
         </Fade>
 
         <span className={classes.spacer} />

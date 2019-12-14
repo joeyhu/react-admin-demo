@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
+import intl from "react-intl-universal";
+
 // import moment from "moment";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { makeStyles } from "@material-ui/styles";
@@ -149,7 +151,9 @@ const UsersTable = props => {
                         </Avatar>
                         <Typography variant="body1">{user.name}</Typography>
                         <Typography variant="body1" color="textSecondary">
-                          {profile._id === user._id ? "(自己)" : ""}
+                          {profile._id === user._id
+                            ? `(${intl.get("self")})`
+                            : ""}
                         </Typography>
                       </div>
                     </TableCell>

@@ -24,6 +24,8 @@ export default {
   update_password: "修改密码",
   update: "修改",
   save: "保存",
+  delete: "删除",
+  self: "自己",
   success: "操作成功！",
   page_not_found: "页面未找到!",
   go_back: "返回"

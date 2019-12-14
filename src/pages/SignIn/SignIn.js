@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import validate from "validate.js";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, TextField, Link, Typography, Fade } from "@material-ui/core";
+import intl from "react-intl-universal";
 
 // import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -129,7 +130,7 @@ const SignIn = props => {
     <div className={classes.root}>
       <form className={classes.form} onSubmit={handleSignIn}>
         <Typography className={classes.title} variant="h2">
-          Sign in
+          {intl.get("sign_in")}
         </Typography>
         <TextField
           className={classes.textField}
@@ -171,12 +172,13 @@ const SignIn = props => {
           type="submit"
           variant="contained"
         >
-          Sign in now
+          {" "}
+          {intl.get("sign_in")}
         </Button>
         <Typography color="textSecondary" variant="body1">
           Don't have an account?{" "}
           <Link component={RouterLink} to="/sign-up" variant="h6">
-            Sign up
+            {intl.get("sign_up")}
           </Link>
         </Typography>
       </form>
