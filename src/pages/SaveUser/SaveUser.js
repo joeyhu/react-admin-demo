@@ -5,14 +5,7 @@ import validate from "validate.js";
 import { makeStyles } from "@material-ui/core/styles";
 import intl from "react-intl-universal";
 
-import {
-  Button,
-  TextField,
-  Grid,
-  Link,
-  Typography,
-  Fade
-} from "@material-ui/core";
+import { Button, TextField, Typography, Fade } from "@material-ui/core";
 
 import { reqApi } from "../../api";
 
@@ -79,7 +72,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SaveUser = props => {
-  const { history, _id } = props;
+  const { _id } = props;
 
   const classes = useStyles();
 

@@ -52,8 +52,8 @@ const Main = props => {
       })}
     >
       <Topbar onSidebarOpen={handleSidebarOpen} />
-      {profile != undefined &&
-        profile._id != undefined &&
+      {profile !== undefined &&
+        profile._id !== undefined &&
         profile._id.length > 0 && (
           <Sidebar
             onClose={handleSidebarClose}

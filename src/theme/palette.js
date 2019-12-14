@@ -46,5 +46,10 @@ export default {
     dark: colors.grey[600],
     main: colors.grey[200],
     light: colors.grey[200]
+  },
+  textSecondary: {
+    dark: colors.grey[300],
+    main: colors.grey[300],
+    light: colors.grey[300]
   }
 };

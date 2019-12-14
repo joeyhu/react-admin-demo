@@ -41,5 +41,6 @@ export default {
   Mobile: "Mobile",
   Tablet: "Tablette",
   Latest_products: "Derniers produits",
-  Latest_Orders: "Dernières commandes"
+  Latest_Orders: "Dernières commandes",
+  source_code: "Source code"
 };

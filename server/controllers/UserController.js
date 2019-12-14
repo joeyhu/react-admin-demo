@@ -54,7 +54,11 @@ let profile = ctx => {
     ctx.status = 401;
     throw new Error("not sign in!");
   }
-  const user = SqliteService.getById(ctx.entity, ctx.currentUserId);
+  let user = SqliteService.getById(ctx.entity, ctx.currentUserId);
+  if (!user || !user._id) {
+    ctx.status = 401;
+    throw new Error("not sign in!");
+  }
   delete user.password;
   ctx.body = user;
 };

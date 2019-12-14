@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Router } from "react-router-dom";
+
 import intl from "react-intl-universal";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { createBrowserHistory } from "history";
@@ -22,7 +23,6 @@ const App = props => {
   let [initDone, setInitDone] = useState(false);
 
   const { dark, language } = setting;
-  console.log(dark);
   cTheme.palette.type = dark ? "dark" : "light";
   let [theme, setTheme] = useState(cTheme);
 
@@ -33,8 +33,13 @@ const App = props => {
 
       const token = sessionStorage.getItem("token");
       if (token && token.length) {
-        const response = await reqApi.get("/User/profile");
-        updateProfile(response.data);
+        try {
+          reqApi.history = history;
+          const response = await reqApi.get("/User/profile");
+          updateProfile(response.data);
+        } catch (e) {
+          console.error(e);
+        }
       }
       setInitDone(true);
     };

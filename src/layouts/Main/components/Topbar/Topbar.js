@@ -1,5 +1,5 @@
 import React from "react";
-import { Link as RouterLink, withRouter } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import { makeStyles, withStyles } from "@material-ui/styles";
@@ -19,6 +19,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import WbIncandescentIcon from "@material-ui/icons/WbIncandescent";
 import TranslateIcon from "@material-ui/icons/Translate";
+import GitHubIcon from "@material-ui/icons/GitHub";
 
 import { Menu, MenuItem, ListItemIcon, ListItemText } from "@material-ui/core";
 // import NotificationsIcon from "@material-ui/icons/NotificationsOutlined";
@@ -157,6 +158,17 @@ const Topbar = props => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
+          <MenuItem
+            component="a"
+            href="https://github.com/joeyhu/react-admin-demo"
+            target="_blank"
+            onClick={handleClose}
+          >
+            <ListItemIcon>
+              <GitHubIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary={intl.get("source_code")} />
+          </MenuItem>
           <MenuItem component={RouterLink} to="/account" onClick={handleClose}>
             <ListItemIcon>
               <AccountBoxIcon fontSize="small" />

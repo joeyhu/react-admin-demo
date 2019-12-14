@@ -41,5 +41,6 @@ export default {
   Mobile: "モバイル",
   Tablet: "タブレット",
   Latest_products: "最新の製品",
-  Latest_Orders: "最新の注文"
+  Latest_Orders: "最新の注文",
+  source_code: "Source code"
 };

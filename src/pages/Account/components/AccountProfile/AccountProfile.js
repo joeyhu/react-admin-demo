@@ -3,18 +3,12 @@ import PropTypes from "prop-types";
 import clsx from "clsx";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/styles";
-import {
-  Card,
-  CardContent,
-  Avatar,
-  Typography,
-  LinearProgress
-} from "@material-ui/core";
+import { Card, CardContent, Avatar, Typography } from "@material-ui/core";
 import { UploadFile } from "../../../../components";
 import { updateProfile } from "../../../../redux/actions";
 import { reqApi } from "../../../../api";
 import { getInitials } from "../../../../helpers";
-import intl from "react-intl-universal";
+// import intl from "react-intl-universal";
 
 const useStyles = makeStyles(theme => ({
   root: {},

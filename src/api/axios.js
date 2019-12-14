@@ -1,4 +1,5 @@
 const axios = require("axios");
+
 // const { history } = require("../App");
 const service = axios.create({
   // api的base_url      process.env.BASE_URL
@@ -47,6 +48,9 @@ service.interceptors.response.use(
       if (error.response.status === 401) {
         // history.push("/sign-in");
         console.log("not login");
+        if (service.history) {
+          service.history.push("/sign-in");
+        }
       } else {
         console.error("---", error.response.data);
       }

@@ -41,5 +41,6 @@ export default {
   Mobile: "移动端",
   Tablet: "平板",
   Latest_products: "最新产品",
-  Latest_Orders: "最新订单"
+  Latest_Orders: "最新订单",
+  source_code: "项目源码"
 };
