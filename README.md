@@ -95,6 +95,7 @@ yarn server-test
 - 上传文件时添加进度条
 - 头像上传后切图
 - 操作 API 管理功能
+- 让项目能运行在React-native上，这样可以支持更多的平台
 
 ## License
 
