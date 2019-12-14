@@ -75,7 +75,7 @@ const Topbar = props => {
   const selectLanguage = lang => {
     console.log(lang);
     handleClose();
-    updateSetting({ ...setting, language: lang });
+    updateSetting({ language: lang });
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -88,7 +88,7 @@ const Topbar = props => {
   const signOut = () => {
     handleClose();
     sessionStorage.removeItem("token");
-    updateProfile({});
+    updateProfile({ _id: "", name: "", email: "", phone: "" });
   };
 
   return (

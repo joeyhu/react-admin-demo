@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/styles";
 import { Card, CardContent, Grid, Typography, Avatar } from "@material-ui/core";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
+import intl from "react-intl-universal";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -46,7 +47,7 @@ const TotalProfit = props => {
               gutterBottom
               variant="body2"
             >
-              TOTAL PROFIT
+              {intl.get("TOTAL_PROFIT")}
             </Typography>
             <Typography color="inherit" variant="h3">
               $23,200

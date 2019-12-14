@@ -23,6 +23,7 @@ import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 
 import mockData from "./data";
 import { StatusBullet } from "../../../../components";
+import intl from "react-intl-universal";
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -65,7 +66,7 @@ const LatestOrders = props => {
             New entry
           </Button>
         }
-        title="Latest Orders"
+        title={intl.get("Latest_Orders")}
       />
       <Divider />
       <CardContent className={classes.content}>

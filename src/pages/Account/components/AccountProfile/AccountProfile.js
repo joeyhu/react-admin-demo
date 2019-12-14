@@ -13,6 +13,7 @@ import {
 import { UploadFile } from "../../../../components";
 import { updateProfile } from "../../../../redux/actions";
 import { reqApi } from "../../../../api";
+import { getInitials } from "../../../../helpers";
 import intl from "react-intl-universal";
 
 const useStyles = makeStyles(theme => ({
@@ -91,7 +92,9 @@ const AccountProfile = props => {
             </Typography>
           </div>
           <div className={classes.avatarCon}>
-            <Avatar className={classes.avatar} src={profile.avatar} />
+            <Avatar className={classes.avatar} src={profile.avatar}>
+              {getInitials(profile.name)}
+            </Avatar>
             <UploadFile onSuccess={uploadSuccess} />
           </div>
         </div>

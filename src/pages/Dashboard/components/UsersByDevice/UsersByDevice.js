@@ -15,6 +15,7 @@ import LaptopMacIcon from "@material-ui/icons/LaptopMac";
 import PhoneIphoneIcon from "@material-ui/icons/PhoneIphone";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import TabletMacIcon from "@material-ui/icons/TabletMac";
+import intl from "react-intl-universal";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -85,19 +86,19 @@ const UsersByDevice = props => {
 
   const devices = [
     {
-      title: "Desktop",
+      title: intl.get("Desktop"),
       value: "63",
       icon: <LaptopMacIcon />,
       color: theme.palette.primary.main
     },
     {
-      title: "Tablet",
+      title: intl.get("Tablet"),
       value: "15",
       icon: <TabletMacIcon />,
       color: theme.palette.error.main
     },
     {
-      title: "Mobile",
+      title: intl.get("Mobile"),
       value: "23",
       icon: <PhoneIphoneIcon />,
       color: theme.palette.warning.main
@@ -112,7 +113,7 @@ const UsersByDevice = props => {
             <RefreshIcon />
           </IconButton>
         }
-        title="Users By Device"
+        title={intl.get("Users_By_Device")}
       />
       <Divider />
       <CardContent>

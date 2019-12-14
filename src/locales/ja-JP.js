@@ -28,5 +28,18 @@ export default {
   self: "自己",
   success: "操作が成功しました！",
   page_not_found: "ページが見つかりません!",
-  go_back: "戻る"
+  go_back: "戻る",
+  have_account: "アカウントを持っています？",
+  create_an_account: "アカウントを持っていないのですか？",
+  BUDGET: "予算",
+  TOTAL_USERS: "合計ユーザー",
+  TASKS_PROGRESS: "タスクの進捗",
+  TOTAL_PROFIT: "利益総額",
+  Latest_Sales: "最新の販売",
+  Users_By_Device: "デバイスごとのユーザー",
+  Desktop: "デスクトップ",
+  Mobile: "モバイル",
+  Tablet: "タブレット",
+  Latest_products: "最新の製品",
+  Latest_Orders: "最新の注文"
 };

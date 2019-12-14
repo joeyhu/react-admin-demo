@@ -147,14 +147,14 @@ const SaveUser = props => {
     <div className={classes.root}>
       <form className={classes.form} onSubmit={handleSaveUser}>
         <Typography className={classes.title} variant="h2">
-          {_id ? "Save User" : "Add new User"}
+          {intl.get(!_id ? "field_add_user" : "field_save_user")}
         </Typography>
         <TextField
           className={classes.textField}
           error={hasError("name")}
           fullWidth
           helperText={hasError("name") ? formState.errors.name[0] : null}
-          label="Name"
+          label={intl.get("field_name")}
           name="name"
           onChange={handleChange}
           type="text"
@@ -166,7 +166,7 @@ const SaveUser = props => {
           error={hasError("email")}
           fullWidth
           helperText={hasError("email") ? formState.errors.email[0] : null}
-          label="Email address"
+          label={intl.get("field_email")}
           name="email"
           onChange={handleChange}
           type="text"
@@ -178,7 +178,7 @@ const SaveUser = props => {
           error={hasError("phone")}
           fullWidth
           helperText={hasError("phone") ? formState.errors.phone[0] : null}
-          label="Phone Number"
+          label={intl.get("field_phone")}
           name="phone"
           onChange={handleChange}
           type="text"
@@ -192,7 +192,7 @@ const SaveUser = props => {
           helperText={
             hasError("password") ? formState.errors.password[0] : null
           }
-          label="Password"
+          label={intl.get("field_password")}
           name="password"
           onChange={handleChange}
           type="password"
@@ -227,7 +227,7 @@ const SaveUser = props => {
           size="large"
           variant="outlined"
         >
-          {intl.get("back")}
+          {intl.get("go_back")}
         </Button>
         <Fade in={success}>
           <span style={{ textAlign: "center", color: "green" }}>

@@ -28,5 +28,18 @@ export default {
   self: "自己",
   success: "操作成功",
   page_not_found: "頁面未找到!",
-  go_back: "返回"
+  go_back: "返回",
+  have_account: "已有一個存在的賬號?",
+  create_an_account: "註冊新賬號?",
+  BUDGET: "預算",
+  TOTAL_USERS: "總用戶",
+  TASKS_PROGRESS: "任務進度",
+  TOTAL_PROFIT: "利潤總額",
+  Latest_Sales: "最新銷售",
+  Users_By_Device: "用戶設備分析",
+  Desktop: "桌面端",
+  Mobile: "手機",
+  Tablet: "手持終端",
+  Latest_products: "最新產品",
+  Latest_Orders: "最新訂單"
 };

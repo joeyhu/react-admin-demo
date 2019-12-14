@@ -31,16 +31,6 @@ const App = props => {
       theme.palette.type = dark ? "dark" : "light";
       setTheme(theme);
 
-      let currentLocale = language;
-      if (!_.find(SUPPOER_LOCALES, { value: currentLocale })) {
-        currentLocale = "en-US";
-      }
-
-      await intl.init({
-        currentLocale, // TODO: determine locale here
-        locales
-        // locales: { [currentLocale]: require(`./locales/${currentLocale}.js`) }
-      });
       const token = sessionStorage.getItem("token");
       if (token && token.length) {
         const response = await reqApi.get("/User/profile");
@@ -49,9 +39,14 @@ const App = props => {
       setInitDone(true);
     };
     f();
-  }, [dark, language, theme, updateProfile]);
+  }, [dark, theme, updateProfile]);
 
   const muiTheme = createMuiTheme(theme);
+  let currentLocale = language;
+  if (!_.find(SUPPOER_LOCALES, { value: currentLocale })) {
+    currentLocale = "en-US";
+  }
+  intl.init({ currentLocale: language, locales });
   return (
     initDone && (
       <MuiThemeProvider theme={muiTheme}>

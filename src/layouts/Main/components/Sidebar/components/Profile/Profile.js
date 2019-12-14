@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/styles";
 import { Avatar, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
+import { getInitials } from "../../../../../../helpers";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,7 +33,7 @@ const Profile = props => {
   useEffect(() => {}, []);
   const goSettings = () => {
     sideBarClose();
-    history.push("/settings");
+    history.push("/account");
   };
   return (
     <div {...rest} className={clsx(classes.root, className)}>
@@ -41,7 +42,9 @@ const Profile = props => {
         className={classes.avatar}
         src={profile.avatar}
         onClick={goSettings}
-      />
+      >
+        {getInitials(profile.name)}
+      </Avatar>
       <Typography className={classes.name} variant="h4">
         {profile.name}
       </Typography>

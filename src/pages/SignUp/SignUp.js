@@ -40,7 +40,7 @@ const schema = {
 
 const useStyles = makeStyles(theme => ({
   root: {
-    height: "100%"
+    // height: "100%"
   },
   form: {
     margin: "auto",
@@ -143,7 +143,7 @@ const SignUp = props => {
           error={hasError("name")}
           fullWidth
           helperText={hasError("name") ? formState.errors.name[0] : null}
-          label="Name"
+          label={intl.get("field_name")}
           name="name"
           onChange={handleChange}
           type="text"
@@ -155,7 +155,7 @@ const SignUp = props => {
           error={hasError("email")}
           fullWidth
           helperText={hasError("email") ? formState.errors.email[0] : null}
-          label="Email address"
+          label={intl.get("field_email")}
           name="email"
           onChange={handleChange}
           type="text"
@@ -167,7 +167,7 @@ const SignUp = props => {
           error={hasError("phone")}
           fullWidth
           helperText={hasError("phone") ? formState.errors.phone[0] : null}
-          label="Phone Number"
+          label={intl.get("field_phone")}
           name="phone"
           onChange={handleChange}
           type="text"
@@ -181,7 +181,7 @@ const SignUp = props => {
           helperText={
             hasError("password") ? formState.errors.password[0] : null
           }
-          label="Password"
+          label={intl.get("field_password")}
           name="password"
           onChange={handleChange}
           type="password"
@@ -205,7 +205,7 @@ const SignUp = props => {
           {intl.get("sign_up")}
         </Button>
         <Typography color="textSecondary" variant="body1">
-          Have an account?{" "}
+          {intl.get("have_account")}
           <Link component={RouterLink} to="/sign-in" variant="h6">
             {intl.get("sign_in")}
           </Link>

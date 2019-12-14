@@ -31,7 +31,7 @@ const schema = {
 
 const useStyles = makeStyles(theme => ({
   root: {
-    height: "100%"
+    // height: "100%"
   },
   form: {
     margin: "auto",
@@ -62,7 +62,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SignIn = props => {
-  const { history } = props;
+  const { history, updateProfile } = props;
 
   const classes = useStyles();
 
@@ -113,7 +113,7 @@ const SignIn = props => {
     reqApi
       .post("/User/signIn", { email, password })
       .then(function(response) {
-        props.updateProfile(response.data);
+        updateProfile(response.data);
         sessionStorage.setItem("token", response.data.sessionFullStr);
         history.push("/");
       })
@@ -137,7 +137,7 @@ const SignIn = props => {
           error={hasError("email")}
           fullWidth
           helperText={hasError("email") ? formState.errors.email[0] : null}
-          label="Email address"
+          label={intl.get("field_email")}
           name="email"
           onChange={handleChange}
           type="text"
@@ -151,7 +151,7 @@ const SignIn = props => {
           helperText={
             hasError("password") ? formState.errors.password[0] : null
           }
-          label="Password"
+          label={intl.get("field_password")}
           name="password"
           onChange={handleChange}
           type="password"
@@ -172,11 +172,10 @@ const SignIn = props => {
           type="submit"
           variant="contained"
         >
-          {" "}
           {intl.get("sign_in")}
         </Button>
         <Typography color="textSecondary" variant="body1">
-          Don't have an account?{" "}
+          {intl.get("create_an_account")}
           <Link component={RouterLink} to="/sign-up" variant="h6">
             {intl.get("sign_up")}
           </Link>
@@ -195,4 +194,4 @@ SignIn.propTypes = {
 // };
 // const mapDispatchToProps = dispatch => bindActionCreators({ signIn }, dispatch);
 
-export default withRouter(connect(null, { updateProfile })(SignIn));
+export default connect(state => state, { updateProfile })(SignIn);
