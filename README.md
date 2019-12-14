@@ -4,7 +4,7 @@ React 后台管理的项目模板，包含了一个简单的 Nodejs 后台 serve
 
 ## Features
 
-- 包含一个简单的 Nodejs server，使用了 koa2.
+- 包含一个简单的 Nodejs server，使用了 [koa2](https://github.com/koajs/koa).
 - 国际化多语言支持（中文，English，日文...），使用了 [react-intl-universal](https://github.com/alibaba/react-intl-universal).
 - UI 使用了 [MATERIAL-UI](https://material-ui.com/)，支持换皮肤，白天和黑夜模式.
 - CSS 扩展语言 使用了 [SASS](https://sass-lang.com/) .
