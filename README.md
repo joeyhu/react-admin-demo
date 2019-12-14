@@ -8,6 +8,7 @@ React 后台管理的项目模板，包含了一个简单的 Nodejs 后台 serve
 - 国际化多语言支持（中文，English，日文...），使用了 [react-intl-universal](https://github.com/alibaba/react-intl-universal).
 - UI 使用了 [MATERIAL-UI](https://material-ui.com/)，支持换皮肤，白天和黑夜模式.
 - CSS 扩展语言 使用了 [SASS](https://sass-lang.com/) .
+- 支持响应式布局，可以适应不同的终端及不同分辨率屏幕 .
 - 支持文件上传，头像上传.
 - 前端数据存储在 LocalStorage 和 SessionStorage.
 - 后端服务器使用了 [better-sqlite3](https://github.com/JoshuaWise/better-sqlite3) 数据库.
