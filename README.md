@@ -16,6 +16,10 @@ React 后台管理的项目模板，包含了一个简单的 Nodejs 后台 serve
 
 `yarn start`
 
+# 运行截图
+![Image text](https://github.com/joeyhu/react-admin-demo/blob/master/public/images/demo/dark_demo.jpg)
+![Image text](https://github.com/joeyhu/react-admin-demo/blob/master/public/images/demo/_demo.jpg)
+
 # Todo List
 
 - ~~仪表盘~~
