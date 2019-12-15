@@ -5,7 +5,9 @@ import { makeStyles } from "@material-ui/styles";
 import { Divider, Drawer } from "@material-ui/core";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import PeopleIcon from "@material-ui/icons/People";
-import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
+import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
+import ChatIcon from "@material-ui/icons/Chat";
+
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import SettingsIcon from "@material-ui/icons/Settings";
 import intl from "react-intl-universal";
@@ -47,14 +49,19 @@ const Sidebar = props => {
       icon: <DashboardIcon />
     },
     {
+      title: intl.get("sidebar_todo"),
+      href: "/todo",
+      icon: <AssignmentTurnedInIcon />
+    },
+    {
+      title: intl.get("sidebar_chat"),
+      href: "/chat",
+      icon: <ChatIcon />
+    },
+    {
       title: intl.get("sidebar_users"),
       href: "/users",
       icon: <PeopleIcon />
-    },
-    {
-      title: intl.get("sidebar_products"),
-      href: "/products",
-      icon: <ShoppingBasketIcon />
     },
     {
       title: intl.get("sidebar_account"),

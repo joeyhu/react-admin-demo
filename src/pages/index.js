@@ -6,3 +6,5 @@ export { default as Settings } from "./Settings";
 export { default as NotFound } from "./NotFound";
 export { default as UserList } from "./UserList";
 export { default as SaveUser } from "./SaveUser";
+export { default as Todo } from "./Todo";
+export { default as Chat } from "./Chat";

@@ -49,9 +49,9 @@ yarn server-test
 
 # 运行截图
 
-![Image text](https://github.com/joeyhu/react-admin-demo/blob/master/public/images/demo/dark_demo.jpg)
+![Image text](public/images/demo/dark_demo.jpg)
 
-![Image text](https://github.com/joeyhu/react-admin-demo/blob/master/public/images/demo/light_demo.jpg)
+![Image text](public/images/demo/light_demo.jpg)
 
 # 用到的技术
 

@@ -1,8 +1,10 @@
 export default {
-  app_name: "KYB™ Admin",
+  app_name: "KYB™ TODO List",
   company: "Chengdu Zhiqian Technology Co., Ltd.",
   select_language: "Change Language",
   sidebar_dashboard: "Dashboard",
+  sidebar_todo: "Todo",
+  sidebar_chat: "Char",
   sidebar_users: "Users",
   sidebar_products: "Products",
   sidebar_account: "Profile",

@@ -10,7 +10,8 @@ import {
   Badge,
   Typography,
   IconButton,
-  Button
+  Button,
+  Hidden
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import AppsIcon from "@material-ui/icons/Apps";
@@ -112,7 +113,7 @@ const Topbar = props => {
           startIcon={<TranslateIcon />}
           onClick={changeLanguage}
         >
-          {SUPPOER_LOCALES_MAP[language].name}
+          <Hidden mdDown> {SUPPOER_LOCALES_MAP[language].name}</Hidden>
         </Button>
         <Menu
           id="language-menu"

@@ -12,7 +12,9 @@ import {
   Settings as SettingsView,
   NotFound as NotFoundView,
   UserList as UserListView,
-  SaveUser as SaveUserView
+  SaveUser as SaveUserView,
+  Todo as TodoView,
+  Chat as ChatView
 } from "../pages";
 
 const Routes = () => {
@@ -34,13 +36,26 @@ const Routes = () => {
         path="/users"
       />
       <RouteWithLayout
+        component={TodoView}
+        exact
+        isAuth={true}
+        layout={MainLayout}
+        path="/todo"
+      />
+      <RouteWithLayout
+        component={ChatView}
+        exact
+        isAuth={true}
+        layout={MainLayout}
+        path="/chat"
+      />
+      <RouteWithLayout
         component={SaveUserView}
         exact
         isAuth={true}
         layout={MainLayout}
         path="/save-user"
       />
-
       <RouteWithLayout
         component={SignInView}
         exact
