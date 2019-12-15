@@ -48,10 +48,17 @@ yarn server-test
 ```
 
 # 运行截图
-
 ![Image text](public/images/demo/dark_demo.jpg)
 
 ![Image text](public/images/demo/light_demo.jpg)
+
+<<<<<<< HEAD
+![Image text](public/images/demo/dark_demo.jpg)
+
+![Image text](public/images/demo/light_demo.jpg)
+=======
+
+>>>>>>> 71af4e7b179f09a317770393de9b8a022ff721a4
 
 # 用到的技术
 
@@ -95,6 +102,7 @@ yarn server-test
 - 上传文件时添加进度条
 - 头像上传后切图
 - 操作 API 管理功能
+- 让项目能运行在React-native上，这样可以支持更多的平台
 
 ## License
 
